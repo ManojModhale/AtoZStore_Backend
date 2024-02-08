@@ -8,10 +8,15 @@ import com.store.app.bean.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, String> 
 {
-	public User findByUsernameAndPassword(String username, String password);
-	
 	/*
 	@Query("from User u where u.username= :username AND u.password = :password")
 	public User findByUsernameAndPassword(@Param(value = "username") String username,@Param(value = "password") String password);
 	*/
+	
+	public User findByUsernameAndPassword(String username, String password);
+	
+	public User findByUsernameAndEmail(String username,String email);
+	
+	public User findByUsername(String username);
+	
 }
