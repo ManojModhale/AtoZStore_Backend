@@ -1,32 +1,40 @@
 package com.store.app.bean;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="User")
+@Table(name="User1")
 public class User 
 {
 	@Id
 	private String username;
 	private String password;
+
 	private String firstname;
 	private String lastname;
+	private String gender;
+	private int age;
+
+
 	private String email;
-	private long mobileno;
+	private long contactno;
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public User(String username, String password, String firstname, String lastname, String email, long mobileno) {
+	public User(String username, String password, String firstname, String lastname,String gender,int age, String email, long contactno) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.firstname = firstname;
 		this.lastname = lastname;
+		this.gender=gender;
+		this.age=age;
 		this.email = email;
-		this.mobileno = mobileno;
+		this.contactno = contactno;
 	}
 	public String getUsername() {
 		return username;
@@ -40,6 +48,9 @@ public class User
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	
+	
 	public String getFirstname() {
 		return firstname;
 	}
@@ -52,22 +63,41 @@ public class User
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
+	
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
 	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public long getMobileno() {
-		return mobileno;
+	
+	public long getContactno() {
+		return contactno;
 	}
-	public void setMobileno(long mobileno) {
-		this.mobileno = mobileno;
+	public void setContactno(long contactno) {
+		this.contactno = contactno;
 	}
 	@Override
 	public String toString() {
-		return "User [username=" + username + ", password=" + password + ", firstname=" + firstname + ", lastname="
-				+ lastname + ", email=" + email + ", mobileno=" + mobileno + "]";
+		return "User [username=" + username + ", password=" + password + ", firstname="
+				+ firstname + ", lastname=" + lastname + ", gender=" + gender + ", age=" + age + ", email=" + email
+				+ ", contactno=" + contactno + "]";
 	}
+	
+	
+	
+	
 	
 }
