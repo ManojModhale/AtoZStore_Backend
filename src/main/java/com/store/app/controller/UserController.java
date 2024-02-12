@@ -15,58 +15,62 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.store.app.bean.User;
+
 import com.store.app.service.UserServiceImpl;
 
+import com.store.app.service.UserService;
+
 @RestController
-@CrossOrigin("http://localhost:4200")
 @RequestMapping("/user")
+@CrossOrigin( "http://localhost:4200")
 public class UserController 
 {
-	@Autowired
-	UserServiceImpl service;
 	
-	@PostMapping("/adduser")
-	public User adduser(@RequestBody User u)
+	@Autowired
+	private UserService userService1;
+	
+	
+	@PostMapping("/newuser")
+	public void registerUser(@RequestBody User user)
 	{
-		System.out.println("in register");
-		return service.addregister(u);
+		System.out.println("inside registration "+user);
+		userService1.registerUser(user);
 	}
+	
 	@PostMapping("/loginuser")
-	public User loginuser(@RequestBody User u)
+	//public User loginAuthenticate(@RequestParam String username,@RequestParam String password)
+	public User loginAuthenticate(@RequestBody User user)
 	{
-		System.out.println("in login");
-		return service.loginuser(u.getUsername(), u.getPassword());
-		
-		
-		
+		System.out.println("inside login "+user.getUsername()+","+user.getPassword());
+
+		return userService1.loginUser(user.getUsername(), user.getPassword());
 	}
-	@DeleteMapping("/delete")
-	public void delete(@RequestParam String username) {
-		service.delete(username);
+	
+	@PostMapping("/forgotpass")
+	public int forgotpassword(@RequestParam String username, @RequestParam String email)
+	{
+		return userService1.getByEmail(username, email);
 	}
+	
+	@PostMapping("/changepass")
+	public boolean changePassword(@RequestParam String username, @RequestParam String password)
+	{
+		return userService1.changePassword(username, password);
+	}
+	
 	
 	@PostMapping("/update")
 	  public int update(@RequestBody User g) {
-			return service.update(g);
+			return userService1.update(g);
 		}
 	
 	@GetMapping("/getuser/{username}")
 	public User getUser(@PathVariable String username) {
-		return service.getUserByUsername(username);
-	}
+		return userService1.getUserByUsername(username);
+	}		
 		
-		@GetMapping("/display")
-		public List<User> getbyUser(){
-			return service.getUser();         
-			
-		}
 		
-		@PostMapping("/forgotpass")
-		public User forgetpassword(@RequestBody User u) {
-			System.out.println("in forget: "+u);
-			return service.forgetpassword(u.getUsername(),u.getEmail());
-			
-		}
+		
 	
 
 }

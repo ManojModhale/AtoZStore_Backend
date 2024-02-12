@@ -1,12 +1,13 @@
 package com.store.app.bean;
 
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="User1")
+@Table(name = "Customer")
 public class User 
 {
 	@Id
@@ -21,6 +22,10 @@ public class User
 
 	private String email;
 	private long contactno;
+	
+	@Embedded
+	private Address address;
+	
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -35,6 +40,19 @@ public class User
 		this.age=age;
 		this.email = email;
 		this.contactno = contactno;
+	}
+	public User(String username, String password, String firstname, String lastname, String gender, int age,
+			String email, long contactno, Address address) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.gender = gender;
+		this.age = age;
+		this.email = email;
+		this.contactno = contactno;
+		this.address = address;
 	}
 	public String getUsername() {
 		return username;
@@ -62,7 +80,9 @@ public class User
 	}
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
-	}
+	}	
+	
+	
 	
 	public String getGender() {
 		return gender;
@@ -81,23 +101,31 @@ public class User
 	}
 	public void setEmail(String email) {
 		this.email = email;
-	}
-	
+	}	
 	public long getContactno() {
 		return contactno;
 	}
+
+	
 	public void setContactno(long contactno) {
 		this.contactno = contactno;
 	}
+	
+	public Address getAddress() {
+		return address;
+	}
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 	@Override
 	public String toString() {
-		return "User [username=" + username + ", password=" + password + ", firstname="
-				+ firstname + ", lastname=" + lastname + ", gender=" + gender + ", age=" + age + ", email=" + email
-				+ ", contactno=" + contactno + "]";
+		return "User [username=" + username + ", password=" + password + ", firstname=" + firstname + ", lastname="
+				+ lastname + ", gender=" + gender + ", age=" + age + ", email=" + email + ", contactno=" + contactno
+				+ ", address=" + address + "]";
+	}
+	
 	}
 	
 	
 	
 	
-	
-}
