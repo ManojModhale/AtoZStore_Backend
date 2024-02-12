@@ -34,5 +34,7 @@ public interface ProductService
 	public ResponseEntity<Products> uploadImage(int productId,MultipartFile file) throws IOException;
 	    
 	public byte[] downloadImage(int productId) throws IOException;
+	
+	public void changeImagePath(String filePath,int productId);
 	    
 }

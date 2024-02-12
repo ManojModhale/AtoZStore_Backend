@@ -1,8 +1,14 @@
 package com.store.app.bean;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderColumn;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,6 +30,10 @@ public class User
 	
 	@Embedded
 	private Address address;
+	@OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="userid")
+    @OrderColumn(name="no")
+    private List<CartProduct> cproducts;
 	
 	public User() {
 		super();
@@ -52,6 +62,13 @@ public class User
 		this.email = email;
 		this.contactno = contactno;
 		this.address = address;
+	}
+	
+	public List<CartProduct> getCproducts() {
+		return cproducts;
+	}
+	public void setCproducts(List<CartProduct> cproducts) {
+		this.cproducts = cproducts;
 	}
 	public String getUsername() {
 		return username;

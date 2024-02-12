@@ -115,6 +115,7 @@ public class ProductController
 	        return productService1.getProductSizes(productId);
 	    }
 	    
+	    
 	    @GetMapping("/getProductByCategory/{category}")
 	    public List<Products> getProductsByCategory(@PathVariable("category") String category) {
 	    	System.out.println("category : "+category);
@@ -145,21 +146,28 @@ public class ProductController
 	 
 	    }
 	    
-	    //getImage
-	    @GetMapping("/downloadImage/{productId}")
-	    public ResponseEntity<byte[]> getImage(@PathVariable int productId) throws IOException
-	    {
-	    	byte[] imageData=productService1.downloadImage(productId);
-	    	if (imageData != null && imageData.length > 0) 
-	    	{
-	            HttpHeaders headers = new HttpHeaders();
-	            headers.setContentType(org.springframework.http.MediaType.IMAGE_JPEG); 
+	    // //getImage
+	    // @GetMapping("/downloadImage/{productId}")
+	    // public ResponseEntity<byte[]> getImage(@PathVariable int productId) throws IOException
+	    // {
+	    // 	byte[] imageData=productService1.downloadImage(productId);
+	    // 	if (imageData != null && imageData.length > 0) 
+	    // 	{
+	    //         HttpHeaders headers = new HttpHeaders();
+	    //         headers.setContentType(org.springframework.http.MediaType.IMAGE_JPEG); 
 
-	            return new ResponseEntity<>(imageData, headers, HttpStatus.OK);
-	        } else {
-	            return ResponseEntity.notFound().build();
-	        }
+	    //         return new ResponseEntity<>(imageData, headers, HttpStatus.OK);
+	    //     } else {
+	    //         return ResponseEntity.notFound().build();
+	    //     }
 	 
+	    // }
+	    @PostMapping("/changepath/{productId}")
+	    public void changeImagePath(@RequestParam String filePath,@PathVariable int productId)
+	    {
+	    	System.out.println("path"+filePath);
+	    	System.out.println("id:"+productId);
+	    	productService1.changeImagePath(filePath, productId);
 	    }
 		
 }
