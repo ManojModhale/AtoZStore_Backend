@@ -1,5 +1,6 @@
 package com.store.app.service;
 
+import java.util.Optional;
 import java.util.Properties;
 import java.util.Random;
 
@@ -65,6 +66,8 @@ public class UserServiceImpl implements UserService
 			return true;
 		}
 		return false;
+		
+		
 	}
 	
 	
@@ -142,6 +145,31 @@ public class UserServiceImpl implements UserService
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public User getUser(String username) 
+	{
+		// TODO Auto-generated method stub
+		return userrepository1.findByUsername(username);
+	}
+
+	@Override
+	public void updateUser(User user) 
+	{
+		System.out.println("before update:"+user);
+		// TODO Auto-generated method stub
+		User updatedUser=userrepository1.findByUsername(user.getUsername());
+		
+		updatedUser.setFirstname(user.getFirstname());
+		updatedUser.setLastname(user.getLastname());
+		updatedUser.setEmail(user.getEmail());
+		updatedUser.setContactno(user.getContactno());
+		updatedUser.setGender(user.getGender());
+		updatedUser.setAge(user.getAge());
+		
+		userrepository1.save(updatedUser);
+		
 	}
 	
 	

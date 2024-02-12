@@ -24,7 +24,7 @@ public class ProductServiceImpl implements ProductService
 	@Autowired
 	private ProductsRepository productsRepository1;
 
-	private final String uploadDirectory = "F:\\SpringBoot Programming 27_10_23\\Product_Backend\\src\\main\\resources";
+	private final String uploadDirectory = "F:\\AtoZStore\\AtoZ_Backend\\AtoZ_Store\\src\\main\\resources";
 
 	@Override
 	public ResponseEntity<Products> saveNewProduct(Products product, MultipartFile file) throws IOException 

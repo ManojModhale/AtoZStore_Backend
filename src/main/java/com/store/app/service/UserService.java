@@ -11,5 +11,9 @@ public interface UserService
 	public int getByEmail(String username, String email);
 	
 	public boolean changePassword(String username,String password);
-
+	
+	public User getUser(String username);
+	
+	public void updateUser(User user);
+	
 }
