@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService
 		// TODO Auto-generated method stub
 		User forgotpassUser=userrepository1.findByUsernameAndEmail(username, email);
 		if(forgotpassUser!=null)
-		{
+		{   
 			return messageBodyforOTP(forgotpassUser.getEmail(), forgotpassUser.getFirstname(),forgotpassUser.getLastname());
 		}
 		else
@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService
 		// TODO Auto-generated method stub
 		User changePassUser=userrepository1.findByUsername(username);
 		if(changePassUser!=null)
-		{
+		{   
 			changePassUser.setPassword(password);
 			userrepository1.save(changePassUser);
 			return true;
@@ -172,6 +172,29 @@ public class UserServiceImpl implements UserService
 		
 	}
 	
-	
+	public User getUserByUsername(String username) {
+		// TODO Auto-generated method stub
+		return userrepository1.findById(username).get();
+	}
+	public int update(User u) {
+		System.out.println("in update");
+		Optional<User>op=userrepository1.findById(u.getUsername());
+		
+		if(op.isPresent()) {
+			User u1=op.get();
+			
+
+			u1.setFirstname(u.getFirstname());
+			u1.setLastname(u.getLastname());
+			u1.setGender(u.getGender());
+			u1.setAge(u.getAge());
+			u1.setEmail(u.getEmail());
+			u1.setContactno(u.getContactno());
+			
+			userrepository1.save(u1);
+			return 1;
+		}
+		return 0;
+	}
 
 }
