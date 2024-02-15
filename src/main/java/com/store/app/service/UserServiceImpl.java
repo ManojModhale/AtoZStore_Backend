@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService
 		// TODO Auto-generated method stub
 		User forgotpassUser=userrepository1.findByUsernameAndEmail(username, email);
 		if(forgotpassUser!=null)
-		{
+		{   
 			return messageBodyforOTP(forgotpassUser.getEmail(), forgotpassUser.getFirstname(),forgotpassUser.getLastname());
 		}
 		else
@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService
 		// TODO Auto-generated method stub
 		User changePassUser=userrepository1.findByUsername(username);
 		if(changePassUser!=null)
-		{
+		{   
 			changePassUser.setPassword(password);
 			userrepository1.save(changePassUser);
 			return true;

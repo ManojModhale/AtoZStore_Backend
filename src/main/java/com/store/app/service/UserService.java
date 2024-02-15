@@ -2,6 +2,7 @@ package com.store.app.service;
 
 import java.util.List;
 
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -21,5 +22,6 @@ public interface UserService
 	public int getByEmail(String username, String email);
 	
 	public boolean changePassword(String username,String password);
+
 
 }

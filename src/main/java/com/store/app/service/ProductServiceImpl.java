@@ -1,6 +1,8 @@
 package com.store.app.service;
 
 import java.io.File;
+
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -24,8 +26,10 @@ public class ProductServiceImpl implements ProductService
 	@Autowired
 	private ProductsRepository productsRepository1;
 
-	private final String uploadDirectory = "D:\\AtoZ\\AtoZ backend\\AtoZStore_Backend\\src\\main\\resources";
-
+	//private final String uploadDirectory = "D:\\AtoZ_Store\\AtoZ_Store_backend123\\AtoZStore_Backend\\src\\main\\resources";
+	
+	//private final String uploadDirectory = "D:\\AtoZ_Store\\AtoZ_Store_frontend\\AtoZStore_Frontend\\src\\assets";
+	private final String uploadDirectory ="D:\\AtoZ\\AtoZ frontend\\AtoZStore_Frontend\\src\\assets";
 	@Override
 	public ResponseEntity<Products> saveNewProduct(Products product, MultipartFile file) throws IOException 
 	{
@@ -101,6 +105,7 @@ public class ProductServiceImpl implements ProductService
 	@Override
 	public List<Products> getCategorizedProducts(String category) {
 		// TODO Auto-generated method stub
+		System.out.println(category);
 		return productsRepository1.findByCategory(category);
 	}
 	
@@ -166,6 +171,27 @@ public class ProductServiceImpl implements ProductService
         }
 		return null;	
 	}
+
+	@Override
+	public void changeImagePath(String filePath, int productId) 
+	{
+		// TODO Auto-generated method stub
+		Optional<Products> optionalProduct = productsRepository1.findById(productId);
+        if (optionalProduct.isPresent()) 
+        {
+        	Products product = optionalProduct.get();
+        	ImageFile file=product.getImageFile();
+        	
+        	String name=file.getName();
+        	String newFilePath=filePath+name; 
+        	file.setFilePath(newFilePath);
+        	
+        	product.setImageFile(file);
+        	productsRepository1.save(product);
+        }
+	}
+
+
 
 	
 
