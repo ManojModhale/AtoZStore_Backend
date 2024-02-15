@@ -22,9 +22,11 @@ public class CartProductController {
 	  
 	@Autowired
 	CartService cartService;
+	
 	@PostMapping("addToCart/{username}")
 	public User addToCart(@PathVariable String username, @RequestBody CartProduct cartProduct) {
 		System.out.println(username);
+		System.out.println("###############"+cartProduct);
 		return cartService.addToCart(cartProduct,username);
 	}
 	@GetMapping("getcartproducts/{username}")

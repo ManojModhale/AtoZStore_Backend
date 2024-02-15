@@ -49,7 +49,6 @@ public class UserController
 	{
 		return userService1.changePassword(username, password);
 	}
-<<<<<<< HEAD
 	
 	@GetMapping("/getuser/{username}")
 	public User getUserDetails(@PathVariable("username") String username)
@@ -61,15 +60,19 @@ public class UserController
 	public void updateUserDetails(@RequestBody User user)
 	{
 		userService1.updateUser(user);
-=======
-	@PostMapping("/update")
-	  public int update(@RequestBody User g) {
-			return userService1.update(g);
-		}
-	@GetMapping("/getuser/{username}")
-	public User getUser(@PathVariable String username) {
-		return userService1.getUserByUsername(username);
->>>>>>> cf3bd3dd23743d6ba538f6a43e692d298f7dbbc1
 	}
+	
+	@PostMapping("/update")
+	public int update(@RequestBody User g) 
+	{
+		return userService1.update(g);
+	}
+	/*
+	@GetMapping("/getuser/{username}")
+	public User getUser(@PathVariable String username) 
+	{
+		return userService1.getUserByUsername(username);
+
+	}*/
 
 }

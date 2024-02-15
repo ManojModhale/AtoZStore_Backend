@@ -24,13 +24,13 @@ public class ProductServiceImpl implements ProductService
 	@Autowired
 	private ProductsRepository productsRepository1;
 
-<<<<<<< HEAD
-	private final String uploadDirectory = "F:\\AtoZStore\\AtoZ_Backend\\AtoZ_Store\\src\\main\\resources";
-=======
+
+	//private final String uploadDirectory = "F:\\AtoZStore\\AtoZ_Backend\\AtoZ_Store\\src\\main\\resources";
+
 	//private final String uploadDirectory = "D:\\AtoZ_Store\\AtoZ_Store_backend123\\AtoZStore_Backend\\src\\main\\resources";
 	
-	private final String uploadDirectory = "D:\\AtoZ_Store\\AtoZ_Store_frontend\\AtoZStore_Frontend\\src\\assets";
->>>>>>> cf3bd3dd23743d6ba538f6a43e692d298f7dbbc1
+	private final String uploadDirectory = "F:\\AtoZStore\\AtoZ_Frontend\\AtoZ_Store_Frontend\\src\\assets";
+
 
 	@Override
 	public ResponseEntity<Products> saveNewProduct(Products product, MultipartFile file) throws IOException 
