@@ -1,6 +1,5 @@
 package com.store.app.service;
 
-<<<<<<< HEAD
 import java.util.List;
 
 
@@ -9,11 +8,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.store.app.bean.User;
 
-=======
+
 import org.springframework.stereotype.Service;
 
 import com.store.app.bean.User;
->>>>>>> cf9ddc20ad5ce3ee67816014d0b45ee07cfb181f
+
 @Service
 public interface UserService 
 {
