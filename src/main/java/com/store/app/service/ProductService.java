@@ -29,12 +29,14 @@ public interface ProductService
 
 	public List<Products> getProductByName(String productname);
 
-	public List<Products> getByPriceRange(double min, double max);
+	public List<Products> getByPriceRange(double min, double max, String category);
 	
 	public ResponseEntity<Products> uploadImage(int productId,MultipartFile file) throws IOException;
 	    
 	public byte[] downloadImage(int productId) throws IOException;
 	
 	public void changeImagePath(String filePath,int productId);
+
+	public List<Products> getOfferedProducts();
 	    
 }

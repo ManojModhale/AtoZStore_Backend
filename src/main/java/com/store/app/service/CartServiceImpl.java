@@ -46,5 +46,27 @@ public class CartServiceImpl implements CartService{
 		}
 		return null;
 	}
+	
+	@Override
+	public int deleteFromCart(String username, int cartproductid) {
+		// TODO Auto-generated method stub
+		
+		User user=repository.findByUsername(username);
+		if(user!=null) {
+			List<CartProduct> cartproducts=user.getCproducts();
+			CartProduct productToRemove=new CartProduct();
+			for(CartProduct c:cartproducts)
+			{
+			      if(c.getCartproductId()==cartproductid) {
+			    	  productToRemove=c;
+			      }
+			}
+			cartproducts.remove(productToRemove);
+			user.setCproducts(cartproducts);
+			repository.save(user);
+			return 1;
+			}
+		return 0;
+	}
 
 }
