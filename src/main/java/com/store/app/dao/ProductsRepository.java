@@ -26,8 +26,10 @@ public interface ProductsRepository extends JpaRepository<Products, Integer>
 	
 	List<Products> findByProductname(String productname);
 	
-	@Query("from Products p where p.price between :min and :max")
-	List<Products> findByPriceRange(@Param(value = "min") double min,@Param(value = "max") double max);
+	@Query("from Products p where p.category=:category and p.price between :min and :max")
+	List<Products> findByPriceRange(@Param(value = "min") double min,@Param(value = "max") double max, @Param(value = "category") String category);
+    @Query("from Products p where p.offer!='null'")
+	List<Products> getOfferedProducts();
 	
 	/*
     @Query("SELECT p FROM Products p LEFT JOIN FETCH p.imageFile WHERE p.productId = :productId")

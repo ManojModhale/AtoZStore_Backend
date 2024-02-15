@@ -118,9 +118,9 @@ public class ProductServiceImpl implements ProductService
 	}
 
 	@Override
-	public List<Products> getByPriceRange(double min, double max) {
+	public List<Products> getByPriceRange(double min, double max,String category) {
 		// TODO Auto-generated method stub
-		return productsRepository1.findByPriceRange(min, max);
+		return productsRepository1.findByPriceRange(min, max,category);
 	}
 
 	 //image upload
@@ -189,6 +189,12 @@ public class ProductServiceImpl implements ProductService
         	product.setImageFile(file);
         	productsRepository1.save(product);
         }
+	}
+
+	@Override
+	public List<Products> getOfferedProducts() {
+		// TODO Auto-generated method stub
+		return productsRepository1.getOfferedProducts();
 	}
 
 
