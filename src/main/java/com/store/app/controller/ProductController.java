@@ -130,11 +130,11 @@ public class ProductController
 			return productService1.getProductByName(productname);
 		}
 		
-		@GetMapping("/byPriceRange/{min}/{max}")
-		public List<Products> displayByPriceRange(@PathVariable double min,@PathVariable double max)
+		@PostMapping("/byPriceRange/{category}")
+		public List<Products> displayByPriceRange(@PathVariable String  category,@RequestParam double min, @RequestParam double max)
 		{
 			System.out.println(min+" : "+max);
-			return productService1.getByPriceRange(min, max);
+			return productService1.getByPriceRange(min, max,category);
 		}
 		
 		//setImage
@@ -168,6 +168,12 @@ public class ProductController
 	    	System.out.println("path"+filePath);
 	    	System.out.println("id:"+productId);
 	    	productService1.changeImagePath(filePath, productId);
+	    }
+	    @GetMapping("getOfferedProducts")
+	    public List<Products> getOfferedProducts()
+	    {
+	    	return productService1.getOfferedProducts();
+	       
 	    }
 		
 }

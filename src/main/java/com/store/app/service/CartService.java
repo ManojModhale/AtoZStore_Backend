@@ -13,4 +13,6 @@ public interface CartService {
     public User addToCart(CartProduct cartProduct,String username);
 
 	public List<CartProduct> getCartProducts(String username);
+
+	public int deleteFromCart(String username, int cartproductid);
 }

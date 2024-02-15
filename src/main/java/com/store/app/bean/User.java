@@ -30,6 +30,7 @@ public class User
 	
 	@Embedded
 	private Address address;
+	
 	@OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="userid")
     @OrderColumn(name="no")
