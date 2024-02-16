@@ -14,5 +14,10 @@ public class VendorServiceImpl implements VendorService {
 		// TODO Auto-generated method stub
 		return vendorRepository.findByUsernameAndPassword(username,password);
 	}
+	@Override
+	public Vendor addVendor(Vendor vendor) {
+		// TODO Auto-generated method stub
+		return vendorRepository.save(vendor);
+	}
 
 }

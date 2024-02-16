@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.store.app.bean.User;
 import com.store.app.bean.Vendor;
 @Repository
-public interface VendorRepository extends JpaRepository<Vendor, Integer >{
+public interface VendorRepository extends JpaRepository<Vendor, String>{
 
 		public Vendor findByUsernameAndPassword(String username, String password);
 

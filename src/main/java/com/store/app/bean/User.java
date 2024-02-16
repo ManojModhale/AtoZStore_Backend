@@ -6,13 +6,16 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderColumn;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Customer")
+@Table(name = "Customers")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User 
 {
 	@Id

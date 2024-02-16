@@ -4,4 +4,6 @@ import com.store.app.bean.Vendor;
 
 public interface VendorService {
    public Vendor vendorLogin(String username,String password);
+
+public Vendor addVendor(Vendor vendor);
 }
