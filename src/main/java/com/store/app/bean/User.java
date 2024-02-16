@@ -15,7 +15,7 @@ import jakarta.persistence.OrderColumn;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Customers")
+@Table(name = "customer")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User 
 {
