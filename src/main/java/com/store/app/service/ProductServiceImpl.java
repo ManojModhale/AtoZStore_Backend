@@ -1,6 +1,8 @@
 package com.store.app.service;
 
 import java.io.File;
+
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,8 +28,8 @@ public class ProductServiceImpl implements ProductService
 
 	//private final String uploadDirectory = "D:\\AtoZ_Store\\AtoZ_Store_backend123\\AtoZStore_Backend\\src\\main\\resources";
 	
-	private final String uploadDirectory = "D:\\AtoZ_Store\\AtoZ_Store_frontend\\AtoZStore_Frontend\\src\\assets";
-
+	//private final String uploadDirectory = "D:\\AtoZ_Store\\AtoZ_Store_frontend\\AtoZStore_Frontend\\src\\assets";
+	private final String uploadDirectory ="D:\\AtoZ\\AtoZ frontend\\AtoZStore_Frontend\\src\\assets";
 	@Override
 	public ResponseEntity<Products> saveNewProduct(Products product, MultipartFile file) throws IOException 
 	{

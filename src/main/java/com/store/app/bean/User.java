@@ -5,6 +5,7 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
@@ -86,6 +87,9 @@ public class User
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	
+	
 	public String getFirstname() {
 		return firstname;
 	}
@@ -98,6 +102,9 @@ public class User
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}	
+	
+	
+	
 	public String getGender() {
 		return gender;
 	}
@@ -119,6 +126,8 @@ public class User
 	public long getContactno() {
 		return contactno;
 	}
+
+	
 	public void setContactno(long contactno) {
 		this.contactno = contactno;
 	}
@@ -136,8 +145,8 @@ public class User
 				+ ", address=" + address + "]";
 	}
 	
+	}
 	
 	
 	
 	
-}

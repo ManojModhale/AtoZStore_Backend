@@ -19,9 +19,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 @Entity
 @Table(name="CartProducts")
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
+
 public class CartProduct {
 	
 	@Id
@@ -40,6 +38,97 @@ public class CartProduct {
 	    
 	    private String size;
 	    private String color;
+	    
+	    
+	    
+	    
+	    
+	    
+		public CartProduct() {
+			super();
+			// TODO Auto-generated constructor stub
+		}
+		public CartProduct(int cartproductId, int productid, String productname, String category, double price,
+				String description, CartImageFile cartimageFile, String offer, String size, String color) {
+			super();
+			this.cartproductId = cartproductId;
+			this.productid = productid;
+			this.productname = productname;
+			this.category = category;
+			this.price = price;
+			this.description = description;
+			this.cartimageFile = cartimageFile;
+			this.offer = offer;
+			this.size = size;
+			this.color = color;
+		}
+		public int getCartproductId() {
+			return cartproductId;
+		}
+		public void setCartproductId(int cartproductId) {
+			this.cartproductId = cartproductId;
+		}
+		public int getProductid() {
+			return productid;
+		}
+		public void setProductid(int productid) {
+			this.productid = productid;
+		}
+		public String getProductname() {
+			return productname;
+		}
+		public void setProductname(String productname) {
+			this.productname = productname;
+		}
+		public String getCategory() {
+			return category;
+		}
+		public void setCategory(String category) {
+			this.category = category;
+		}
+		public double getPrice() {
+			return price;
+		}
+		public void setPrice(double price) {
+			this.price = price;
+		}
+		public String getDescription() {
+			return description;
+		}
+		public void setDescription(String description) {
+			this.description = description;
+		}
+		public CartImageFile getCartimageFile() {
+			return cartimageFile;
+		}
+		public void setCartimageFile(CartImageFile cartimageFile) {
+			this.cartimageFile = cartimageFile;
+		}
+		public String getOffer() {
+			return offer;
+		}
+		public void setOffer(String offer) {
+			this.offer = offer;
+		}
+		public String getSize() {
+			return size;
+		}
+		public void setSize(String size) {
+			this.size = size;
+		}
+		public String getColor() {
+			return color;
+		}
+		public void setColor(String color) {
+			this.color = color;
+		}
+		@Override
+		public String toString() {
+			return "CartProduct [cartproductId=" + cartproductId + ", productid=" + productid + ", productname="
+					+ productname + ", category=" + category + ", price=" + price + ", description=" + description
+					+ ", cartimageFile=" + cartimageFile + ", offer=" + offer + ", size=" + size + ", color=" + color
+					+ "]";
+		}
 	    
 	    
 	   

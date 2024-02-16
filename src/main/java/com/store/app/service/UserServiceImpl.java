@@ -1,5 +1,7 @@
 package com.store.app.service;
 
+import java.util.List;
+
 import java.util.Optional;
 import java.util.Properties;
 import java.util.Random;
@@ -23,7 +25,40 @@ import com.store.app.dao.UserRepository;
 public class UserServiceImpl implements UserService 
 {
 	@Autowired
-	private UserRepository userrepository1;
+	UserRepository userrepository1;
+	
+	
+		
+		public int update(User u) {
+			Optional<User>op=userrepository1.findById(u.getUsername());
+			
+			if(op.isPresent()) {
+				User u1=op.get();
+				
+				u1.setFirstname(u.getFirstname());
+				u1.setLastname(u.getLastname());
+				u1.setGender(u.getGender());
+				u1.setAge(u.getAge());
+				u1.setEmail(u.getEmail());
+				u1.setContactno(u.getContactno());
+				
+				userrepository1.save(u1);
+				return 1;
+			}
+			return 0;
+		}
+		
+		
+
+		
+
+		public User getUserByUsername(String username) {
+			// TODO Auto-generated method stub
+			return userrepository1.findById(username).get();
+		}
+
+
+		
 
 	@Override
 	public User loginUser(String username, String password) 
@@ -66,6 +101,7 @@ public class UserServiceImpl implements UserService
 			return true;
 		}
 		return false;
+		
 	}
 	
 	
@@ -145,29 +181,6 @@ public class UserServiceImpl implements UserService
 		}
 	}
 	
-	public User getUserByUsername(String username) {
-		// TODO Auto-generated method stub
-		return userrepository1.findById(username).get();
-	}
-	public int update(User u) {
-		System.out.println("in update");
-		Optional<User>op=userrepository1.findById(u.getUsername());
-		
-		if(op.isPresent()) {
-			User u1=op.get();
-			
-
-			u1.setFirstname(u.getFirstname());
-			u1.setLastname(u.getLastname());
-			u1.setGender(u.getGender());
-			u1.setAge(u.getAge());
-			u1.setEmail(u.getEmail());
-			u1.setContactno(u.getContactno());
-			
-			userrepository1.save(u1);
-			return 1;
-		}
-		return 0;
-	}
+	
 
 }
