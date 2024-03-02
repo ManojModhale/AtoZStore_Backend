@@ -10,68 +10,67 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.store.app.bean.User;
-import com.store.app.service.UserService;
-import com.store.app.service.UserServiceImpl;
+import com.store.app.bean.Customer;
+import com.store.app.service.CustomerService;
 
 @RestController
 @RequestMapping("/user")
 @CrossOrigin( "http://localhost:4200")
-public class UserController 
+public class CustomerController 
 {
 	@Autowired
-	private UserService userService1;
+	private CustomerService customerService;
 	
 	@PostMapping("/newuser")
-	public void registerUser(@RequestBody User user)
+	public void registerUser(@RequestBody Customer user)
 	{
 		System.out.println("inside registration "+user);
-		userService1.registerUser(user);
+		customerService.registerUser(user);
 	}
 	
 	@PostMapping("/loginuser")
 	//public User loginAuthenticate(@RequestParam String username,@RequestParam String password)
-	public User loginAuthenticate(@RequestBody User user)
+	public Customer loginAuthenticate(@RequestBody Customer user)
 	{
 		System.out.println("inside login "+user.getUsername()+","+user.getPassword());
 
-		return userService1.loginUser(user.getUsername(), user.getPassword());
+		return customerService.loginUser(user.getUsername(), user.getPassword());
 	}
 	
 	@PostMapping("/forgotpass")
 	public int forgotpassword(@RequestParam String username, @RequestParam String email)
 	{
-		return userService1.getByEmail(username, email);
+		return customerService.getByEmail(username, email);
 	}
 	
 	@PostMapping("/changepass")
 	public boolean changePassword(@RequestParam String username, @RequestParam String password)
 	{
-		return userService1.changePassword(username, password);
+		return customerService.changePassword(username, password);
 	}
 	
 	@GetMapping("/getuser/{username}")
-	public User getUserDetails(@PathVariable("username") String username)
+	public Customer getUserDetails(@PathVariable("username") String username)
 	{
-		return userService1.getUser(username);
+		return customerService.getUser(username);
 	}
 	
 	@PostMapping("/updateuser")
-	public void updateUserDetails(@RequestBody User user)
+	public void updateUserDetails(@RequestBody Customer user)
 	{
-		userService1.updateUser(user);
+		customerService.updateUser(user);
 	}
 	
 	@PostMapping("/update")
-	public int update(@RequestBody User g) 
+	public int update(@RequestBody Customer g) 
 	{
-		return userService1.update(g);
+		return customerService.update(g);
 	}
 	/*
 	@GetMapping("/getuser/{username}")
-	public User getUser(@PathVariable String username) 
+	public Customer getUser(@PathVariable String username) 
 	{
-		return userService1.getUserByUsername(username);
+		return customerService.getUserByUsername(username);
 
 	}*/
 

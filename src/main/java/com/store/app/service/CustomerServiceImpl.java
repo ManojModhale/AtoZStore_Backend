@@ -16,34 +16,35 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.store.app.bean.User;
-import com.store.app.dao.UserRepository;
+import com.store.app.bean.Address;
+import com.store.app.bean.Customer;
+import com.store.app.dao.CustomerRepository;
 
 @Service
-public class UserServiceImpl implements UserService 
+public class CustomerServiceImpl implements CustomerService 
 {
 	@Autowired
-	private UserRepository userrepository1;
+	private CustomerRepository customerRepository;
 
 	@Override
-	public User loginUser(String username, String password) 
+	public Customer loginUser(String username, String password) 
 	{
 		// TODO Auto-generated method stub
-		return userrepository1.findByUsernameAndPassword(username, password);
+		return customerRepository.findByUsernameAndPassword(username, password);
 	}
 
 	@Override
-	public void registerUser(User user) 
+	public void registerUser(Customer customer) 
 	{
 		// TODO Auto-generated method stub
-		userrepository1.save(user);
+		customerRepository.save(customer);
 	}
 
 	@Override
 	public int getByEmail(String username, String email) 
 	{
 		// TODO Auto-generated method stub
-		User forgotpassUser=userrepository1.findByUsernameAndEmail(username, email);
+		Customer forgotpassUser=customerRepository.findByUsernameAndEmail(username, email);
 		if(forgotpassUser!=null)
 		{   
 			return messageBodyforOTP(forgotpassUser.getEmail(), forgotpassUser.getFirstname(),forgotpassUser.getLastname());
@@ -58,11 +59,11 @@ public class UserServiceImpl implements UserService
 	public boolean changePassword(String username, String password) 
 	{
 		// TODO Auto-generated method stub
-		User changePassUser=userrepository1.findByUsername(username);
+		Customer changePassUser=customerRepository.findByUsername(username);
 		if(changePassUser!=null)
 		{   
 			changePassUser.setPassword(password);
-			userrepository1.save(changePassUser);
+			customerRepository.save(changePassUser);
 			return true;
 		}
 		return false;
@@ -148,18 +149,18 @@ public class UserServiceImpl implements UserService
 	}
 
 	@Override
-	public User getUser(String username) 
+	public Customer getUser(String username) 
 	{
 		// TODO Auto-generated method stub
-		return userrepository1.findByUsername(username);
+		return customerRepository.findByUsername(username);
 	}
 
 	@Override
-	public void updateUser(User user) 
+	public void updateUser(Customer user) 
 	{
 		System.out.println("before update:"+user);
 		// TODO Auto-generated method stub
-		User updatedUser=userrepository1.findByUsername(user.getUsername());
+		Customer updatedUser=customerRepository.findByUsername(user.getUsername());
 		
 		updatedUser.setFirstname(user.getFirstname());
 		updatedUser.setLastname(user.getLastname());
@@ -168,20 +169,20 @@ public class UserServiceImpl implements UserService
 		updatedUser.setGender(user.getGender());
 		updatedUser.setAge(user.getAge());
 		
-		userrepository1.save(updatedUser);
+		customerRepository.save(updatedUser);
 		
 	}
 	
-	public User getUserByUsername(String username) {
+	public Customer getUserByUsername(String username) {
 		// TODO Auto-generated method stub
-		return userrepository1.findById(username).get();
+		return customerRepository.findById(username).get();
 	}
-	public int update(User u) {
+	public int update(Customer u) {
 		System.out.println("in update");
-		Optional<User>op=userrepository1.findById(u.getUsername());
+		Optional<Customer>op=customerRepository.findById(u.getUsername());
 		
 		if(op.isPresent()) {
-			User u1=op.get();
+			Customer u1=op.get();
 			
 
 			u1.setFirstname(u.getFirstname());
@@ -191,10 +192,20 @@ public class UserServiceImpl implements UserService
 			u1.setEmail(u.getEmail());
 			u1.setContactno(u.getContactno());
 			
-			userrepository1.save(u1);
+			customerRepository.save(u1);
 			return 1;
 		}
 		return 0;
+	}
+
+	@Override
+	public void addAddress(String username, Address address) 
+	{
+		// TODO Auto-generated method stub
+		Customer customer=customerRepository.findByUsername(username);
+		customer.setAddress(address);
+		customerRepository.save(customer);
+		
 	}
 
 }
