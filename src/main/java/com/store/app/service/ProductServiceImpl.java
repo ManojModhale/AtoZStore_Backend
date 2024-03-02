@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.store.app.bean.ImageFile;
 import com.store.app.bean.Products;
+import com.store.app.bean.Vendor;
 import com.store.app.dao.ProductsRepository;
+import com.store.app.dao.VendorRepository;
 
 @Service
 public class ProductServiceImpl implements ProductService 
@@ -25,13 +28,15 @@ public class ProductServiceImpl implements ProductService
 	
 	@Autowired
 	private ProductsRepository productsRepository1;
+	@Autowired
+	private VendorRepository vendorRepository;
 
 	//private final String uploadDirectory = "D:\\AtoZ_Store\\AtoZ_Store_backend123\\AtoZStore_Backend\\src\\main\\resources";
 	
 	//private final String uploadDirectory = "D:\\AtoZ_Store\\AtoZ_Store_frontend\\AtoZStore_Frontend\\src\\assets";
-	private final String uploadDirectory ="D:\\AtoZ\\AtoZ frontend\\AtoZStore_Frontend\\src\\assets";
+	private final String uploadDirectory ="D:\\AtoZ_Store\\AtoZFrontend\\AtoZStore_Frontend\\src\\assets";
 	@Override
-	public ResponseEntity<Products> saveNewProduct(Products product, MultipartFile file) throws IOException 
+	public ResponseEntity<Products> saveNewProduct(Products product, MultipartFile file,String vendorid) throws IOException 
 	{
 		// TODO Auto-generated method stub
 		String currentCategory = product.getCategory();
@@ -48,10 +53,18 @@ public class ProductServiceImpl implements ProductService
 		}
 
 		product.setImageFile(ImageFile.builder().name(file.getOriginalFilename()).type(file.getContentType())
-				.filePath(filePath).build());
+				.filePath("/assets/"+product.getCategory()+"/"+file.getOriginalFilename())
+					.build());
 
-		Products prod = saveProduct(product);
-		if (prod != null) {
+		Vendor vendor=vendorRepository.findById(vendorid).get();
+		if(vendor!=null) {
+			List<Products> vendorProducts=vendor.getProducts();
+			vendorProducts.add(product);
+			vendor.setProducts(vendorProducts);
+			Vendor vend = saveProduct(vendor);
+
+		}
+		if (product != null) {
 			return ResponseEntity.ok(product);
 		} else {
 			return ResponseEntity.notFound().build();
@@ -60,10 +73,10 @@ public class ProductServiceImpl implements ProductService
 	}
 
 	@Override
-	public Products saveProduct(Products product) 
+	public Vendor saveProduct(Vendor vendor) 
 	{
 		// TODO Auto-generated method stub
-		return productsRepository1.save(product);
+		return vendorRepository.save(vendor);
 	}
 
 	@Override
@@ -149,7 +162,7 @@ public class ProductServiceImpl implements ProductService
 			        .filePath(filePath)
 			        .build());
             	
-			saveProduct(product);
+			//saveProduct(product);
 			return ResponseEntity.ok(product);
         } else {
             return ResponseEntity.notFound().build();
@@ -195,6 +208,13 @@ public class ProductServiceImpl implements ProductService
 	public List<Products> getOfferedProducts() {
 		// TODO Auto-generated method stub
 		return productsRepository1.getOfferedProducts();
+	}
+
+	@Override
+	public List<Products> getSearchProducts(String searchprod) {
+		// TODO Auto-generated method stub
+
+		return productsRepository1.findByProductnameContaining(searchprod);
 	}
 
 

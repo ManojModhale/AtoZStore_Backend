@@ -1,7 +1,5 @@
 package com.store.app.service;
 
-import java.util.List;
-
 import java.util.Optional;
 import java.util.Properties;
 import java.util.Random;
@@ -18,68 +16,58 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.store.app.bean.Customer;
 import com.store.app.bean.User;
 import com.store.app.dao.CustomerRepo;
 import com.store.app.dao.UserRepository;
-
 @Service
-public class UserServiceImpl implements UserService 
-{
-	@Autowired
-	UserRepository userrepository1;
+public class CustomerServiceImpl implements CustomerService {
+    @Autowired
+    CustomerRepo customerRepo;
+    @Autowired
+    UserRepository userRepository;
+	@Override
+	public void registerUser(Customer customer) {
 	
+	   customerRepo.save(customer);
+
+	}
+	public Customer loginUser(String username, String password) 
+	{
+		// TODO Auto-generated method stub
+		return customerRepo.findByUsernameAndPassword(username, password);
+	}
 	
+	public int update(Customer u) {
+		Optional<Customer>op=customerRepo.findById(u.getUsername());
 		
-		public int update(User u) {
-			Optional<User>op=userrepository1.findById(u.getUsername());
+		if(op.isPresent()) {
+			Customer u1=op.get();
 			
-			if(op.isPresent()) {
-				User u1=op.get();
-				
-				u1.setFirstname(u.getFirstname());
-				u1.setLastname(u.getLastname());
-				u1.setGender(u.getGender());
-				u1.setAge(u.getAge());
-				u1.setEmail(u.getEmail());
-				u1.setContactno(u.getContactno());
-				
-				userrepository1.save(u1);
-				return 1;
-			}
-			return 0;
+			u1.setFirstname(u.getFirstname());
+			u1.setLastname(u.getLastname());
+			u1.setGender(u.getGender());
+			u1.setAge(u.getAge());
+			u1.setEmail(u.getEmail());
+			u1.setContactno(u.getContactno());
+			
+			customerRepo.save(u1);
+			return 1;
 		}
-		
-		
-
-		
-
-		public User getUserByUsername(String username) {
-			// TODO Auto-generated method stub
-			return userrepository1.findById(username).get();
-		}
-
-
-		
-
-	@Override
-	public User loginUser(String username, String password) 
-	{
-		// TODO Auto-generated method stub
-		return userrepository1.findByUsernameAndPassword(username, password);
+		return 0;
 	}
-
+	
+	
 	@Override
-	public void registerUser(User user) 
-	{
+	public Customer getUserByUsername(String username) {
 		// TODO Auto-generated method stub
-		userrepository1.save(user);
+		return customerRepo.findById(username).get();
 	}
-
 	@Override
 	public int getByEmail(String username, String email) 
 	{
 		// TODO Auto-generated method stub
-		User forgotpassUser=userrepository1.findByUsernameAndEmail(username, email);
+		Customer forgotpassUser=customerRepo.findByUsernameAndEmail(username, email);
 		if(forgotpassUser!=null)
 		{   
 			return messageBodyforOTP(forgotpassUser.getEmail(), forgotpassUser.getFirstname(),forgotpassUser.getLastname());
@@ -94,11 +82,12 @@ public class UserServiceImpl implements UserService
 	public boolean changePassword(String username, String password) 
 	{
 		// TODO Auto-generated method stub
-		User changePassUser=userrepository1.findByUsername(username);
+		Customer changePassUser=customerRepo.findByUsername(username);
+		System.out.println(changePassUser.toString());
 		if(changePassUser!=null)
-		{   
+		{    System.out.println("in if");
 			changePassUser.setPassword(password);
-			userrepository1.save(changePassUser);
+			customerRepo.save(changePassUser);
 			return true;
 		}
 		return false;
@@ -180,8 +169,6 @@ public class UserServiceImpl implements UserService
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	
 
+}
 }

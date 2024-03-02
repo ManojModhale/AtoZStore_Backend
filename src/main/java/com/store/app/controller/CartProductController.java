@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.store.app.bean.CartProduct;
+import com.store.app.bean.Customer;
 import com.store.app.bean.User;
 import com.store.app.service.CartService;
 
@@ -25,9 +26,21 @@ public class CartProductController {
 	@Autowired
 	CartService cartService;
 	@PostMapping("addToCart/{username}")
-	public User addToCart(@PathVariable String username, @RequestBody CartProduct cartProduct) {
+	public CartProduct addToCart(@PathVariable String username, @RequestBody CartProduct cartProduct) {
 		System.out.println(username);
+		System.out.println(cartProduct.toString());
 		return cartService.addToCart(cartProduct,username);
+	}
+	@PostMapping("checkInCart/{username}")
+	public boolean checkInCart(@PathVariable String username, @RequestBody  int producid) {
+		System.out.println(username);
+		
+		return cartService.checkInCart(producid,username);
+	}
+	@PostMapping("/productquantity/{updateaction}/{username}")
+	public boolean updateProQuantity(@PathVariable String updateaction,@PathVariable String username, @RequestBody  CartProduct cartProduct) {
+		System.out.println(username);
+		return cartService.updateProductQuantity(updateaction,username,cartProduct.getCartproductId());
 	}
 	@GetMapping("getcartproducts/{username}")
 	public List<CartProduct> getfromcart(@PathVariable String username) {
@@ -35,8 +48,8 @@ public class CartProductController {
 		return cartService.getCartProducts(username);
 	}
 	@PostMapping("deleteFromCart")
-	public int deleteFromCart(@RequestParam String username,@RequestParam int cartproductid) {
+	public void  deleteFromCart(@RequestParam String username,@RequestParam int cartproductid) {
 	  System.out.println(username);
-		return cartService.deleteFromCart(username,cartproductid);
+		 cartService.deleteFromCart(username,cartproductid);
 	}
 }

@@ -2,6 +2,9 @@ package com.store.app.bean;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
@@ -13,6 +16,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.OrderColumn;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,18 +42,24 @@ public class CartProduct {
 	    
 	    private String size;
 	    private String color;
+	    private int quantity;
+	    @ManyToOne
+	    @JoinColumn(name="customerid")
+	    @JsonBackReference
+	    private Customer customer;
 	    
-	    
-	    
-	    
-	    
+	
 	    
 		public CartProduct() {
 			super();
 			// TODO Auto-generated constructor stub
 		}
+	
+		
+		
 		public CartProduct(int cartproductId, int productid, String productname, String category, double price,
-				String description, CartImageFile cartimageFile, String offer, String size, String color) {
+				String description, CartImageFile cartimageFile, String offer, String size, String color, int quantity,
+				Customer customer) {
 			super();
 			this.cartproductId = cartproductId;
 			this.productid = productid;
@@ -61,12 +71,32 @@ public class CartProduct {
 			this.offer = offer;
 			this.size = size;
 			this.color = color;
+			this.quantity = quantity;
+			this.customer = customer;
+		}
+
+
+
+		public Customer getCustomer() {
+			return customer;
+		}
+		public void setCustomer(Customer customer) {
+			this.customer = customer;
 		}
 		public int getCartproductId() {
 			return cartproductId;
 		}
 		public void setCartproductId(int cartproductId) {
 			this.cartproductId = cartproductId;
+		}
+		
+		public int getQuantity() {
+			return quantity;
+		}
+		public void setQuantity(int quantity) {
+			
+			this.quantity = quantity;
+			
 		}
 		public int getProductid() {
 			return productid;
@@ -83,6 +113,8 @@ public class CartProduct {
 		public String getCategory() {
 			return category;
 		}
+		
+
 		public void setCategory(String category) {
 			this.category = category;
 		}
@@ -122,6 +154,8 @@ public class CartProduct {
 		public void setColor(String color) {
 			this.color = color;
 		}
+		
+	
 		@Override
 		public String toString() {
 			return "CartProduct [cartproductId=" + cartproductId + ", productid=" + productid + ", productname="

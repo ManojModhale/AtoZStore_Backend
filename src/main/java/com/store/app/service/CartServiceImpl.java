@@ -2,34 +2,39 @@ package com.store.app.service;
 
 import java.util.ArrayList;
 
+
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.store.app.bean.CartProduct;
+import com.store.app.bean.Customer;
 import com.store.app.bean.User;
 import com.store.app.dao.CartProductRepository;
+import com.store.app.dao.CustomerRepo;
 import com.store.app.dao.UserRepository;
 
 @Service
 public class CartServiceImpl implements CartService{
     @Autowired
     CartProductRepository cartProductRepository;
-
+     @Autowired
+     CustomerRepo customerRepo;
     @Autowired
     UserRepository repository;
 	@Override
-	public User addToCart(CartProduct cartProduct,String username) {
+	public CartProduct addToCart(CartProduct cartProduct,String username) {
 		// TODO Auto-generated method stub
-		User user=repository.findByUsername(username);
+		Customer customer=customerRepo.findByUsername(username);
 		
-		if(user!=null) {
-			System.out.println("in if");
-			List<CartProduct> cartProducts=user.getCproducts();
-			cartProducts.add(cartProduct);
-			user.setCproducts(cartProducts);
-			return repository.save(user);
+		if(customer!=null) {
+
+			cartProduct.setCustomer(customer);
+			cartProduct.setQuantity(1);
+			
+		return	cartProductRepository.save(cartProduct);
 			
 		}
 		
@@ -38,35 +43,60 @@ public class CartServiceImpl implements CartService{
 	@Override
 	public List<CartProduct> getCartProducts(String username) {
 		// TODO Auto-generated method stub
-		List<CartProduct> cartproducts=new ArrayList<>();
-		User user=repository.findByUsername(username);
-		if(user!=null) {
-			cartproducts=user.getCproducts();
-			return cartproducts;
-		}
-		return null;
+		Customer customer=customerRepo.findByUsername(username);
+		
+		return cartProductRepository.findByCustomer(customer);
 	}
 	
 	@Override
-	public int deleteFromCart(String username, int cartproductid) {
+	public void deleteFromCart(String username, int cartproductid) {
 		// TODO Auto-generated method stub
 		
-		User user=repository.findByUsername(username);
-		if(user!=null) {
-			List<CartProduct> cartproducts=user.getCproducts();
-			CartProduct productToRemove=new CartProduct();
-			for(CartProduct c:cartproducts)
-			{
-			      if(c.getCartproductId()==cartproductid) {
-			    	  productToRemove=c;
-			      }
-			}
-			cartproducts.remove(productToRemove);
-			user.setCproducts(cartproducts);
-			repository.save(user);
-			return 1;
-			}
-		return 0;
+//	     cartProductRepository.deleteByCustomerUsernameAndCartproductId(username,cartproductid);
+		 cartProductRepository.deleteById(cartproductid);
+		
 	}
+//	@Override
+	public boolean checkInCart(int cartProduct, String username) {
+		// TODO Auto-generated method stub
+		User user=repository.findByUsername(username);
+//		if(user!=null) {
+//			List<CartProduct> cartProducts=user.getCproducts();
+//			for(CartProduct c:cartProducts) {
+//				if(c.getProductid()==cartProduct) {
+//					return true;
+//				}
+//			}
+//		}
+		return false;
+	}
+	@Override
+	public boolean updateProductQuantity(String updateaction,String username, int cartproductId) {
+		// TODO Auto-generated method stub
+		
+			System.out.println("in add"+cartproductId);
+			Optional<CartProduct> cartProduct=cartProductRepository.findById(cartproductId);
+
+			if(cartProduct.isPresent()) {
+				CartProduct c=cartProduct.get();
+				System.out.println("in update if");
+				if(updateaction.equalsIgnoreCase("add")) {
+				c.setQuantity(c.getQuantity()+1);
+				System.out.println(c.getQuantity());}
+				else if(updateaction.equalsIgnoreCase("subtract")) {
+					c.setQuantity(c.getQuantity()-1);
+					
+			}
+				cartProductRepository.save(c);
+				return true;
+		}
+	
+			
+		
+		return false;
+	}
+
+	
+
 
 }

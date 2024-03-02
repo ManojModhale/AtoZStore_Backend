@@ -1,24 +1,12 @@
 package com.store.app.bean;
 
-import java.util.List;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OrderColumn;
-import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 @Entity
-@Table(name="vendors")
 
-
-
-public class Vendor {
+public class DeliveryPartner {
 	@Id
 	private String username;
 	private String password;
@@ -31,23 +19,16 @@ public class Vendor {
 
 	private String email;
 	private long contactno;
-  private String companyname;
-  private String companytype;
+  private String vehicleType;
+  private String vehicleRegNumber;
   @Embedded
-	private Address address;
-	@OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="vendorid")
-    @OrderColumn(name="no")
-    private List<Products> products;
-public Vendor() {
+	private Address shippingAddress;
+public DeliveryPartner() {
 	super();
 	// TODO Auto-generated constructor stub
 }
-
-
-
-public Vendor(String username, String password, String firstname, String lastname, String gender, int age, String email,
-		long contactno, String companyname, String companytype, Address address, List<Products> products) {
+public DeliveryPartner(String username, String password, String firstname, String lastname, String gender, int age,
+		String email, long contactno, String vehicleType, String vehicleRegNumber, Address shippingAddress) {
 	super();
 	this.username = username;
 	this.password = password;
@@ -57,137 +38,85 @@ public Vendor(String username, String password, String firstname, String lastnam
 	this.age = age;
 	this.email = email;
 	this.contactno = contactno;
-	this.companyname = companyname;
-	this.companytype = companytype;
-	this.address = address;
-	this.products = products;
+	this.vehicleType = vehicleType;
+	this.vehicleRegNumber = vehicleRegNumber;
+	this.shippingAddress = shippingAddress;
 }
-
-
-
 public String getUsername() {
 	return username;
 }
-
-
-
 public void setUsername(String username) {
 	this.username = username;
 }
-
-
-
 public String getPassword() {
 	return password;
 }
-
-
-
 public void setPassword(String password) {
 	this.password = password;
 }
-
-
-
 public String getFirstname() {
 	return firstname;
 }
-
-
-
 public void setFirstname(String firstname) {
 	this.firstname = firstname;
 }
-
-
-
 public String getLastname() {
 	return lastname;
 }
-
-
-
 public void setLastname(String lastname) {
 	this.lastname = lastname;
 }
-
-
-
 public String getGender() {
 	return gender;
 }
-
-
-
 public void setGender(String gender) {
 	this.gender = gender;
 }
-
-
-
 public int getAge() {
 	return age;
 }
-
-
-
 public void setAge(int age) {
 	this.age = age;
 }
-
-
-
 public String getEmail() {
 	return email;
 }
-
-
-
 public void setEmail(String email) {
 	this.email = email;
 }
-
-
-
 public long getContactno() {
 	return contactno;
 }
-
-
-
 public void setContactno(long contactno) {
 	this.contactno = contactno;
 }
+public String getVehicleType() {
+	return vehicleType;
+}
+public void setVehicleType(String vehicleType) {
+	this.vehicleType = vehicleType;
+}
 
-
-
-public List<Products> getProducts() {
-	return products;
+public String getVehicleRegNumber() {
+	return vehicleRegNumber;
 }
-public void setProducts(List<Products> products) {
-	this.products = products;
+public void setVehicleRegNumber(String vehicleRegNumber) {
+	this.vehicleRegNumber = vehicleRegNumber;
 }
-public String getCompanyname() {
-	return companyname;
+public Address getShippingAddress() {
+	return shippingAddress;
 }
-public void setCompanyname(String companyname) {
-	this.companyname = companyname;
-}
-public String getCompanytype() {
-	return companytype;
-}
-public void setCompanytype(String companytype) {
-	this.companytype = companytype;
-}
-public Address getAddress() {
-	return address;
-}
-public void setAddress(Address address) {
-	this.address = address;
+public void setShippingAddress(Address shippingAddress) {
+	this.shippingAddress = shippingAddress;
 }
 @Override
 public String toString() {
-	return "Vendor [companyname=" + companyname + ", companytype=" + companytype + ", address=" + address + "]";
-} 
+	return "DeliveryPartner [username=" + username + ", password=" + password + ", firstname=" + firstname
+			+ ", lastname=" + lastname + ", gender=" + gender + ", age=" + age + ", email=" + email + ", contactno="
+			+ contactno + ", vehicleType=" + vehicleType + ", vehicleRegNumber=" + vehicleRegNumber
+			+ ", shippingAddress=" + shippingAddress + "]";
+}
+
+
   
 }
