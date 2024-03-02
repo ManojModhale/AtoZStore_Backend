@@ -1,5 +1,7 @@
 package com.store.app.service;
 
+import java.util.List;
+
 import java.util.Optional;
 import java.util.Properties;
 import java.util.Random;
@@ -68,9 +70,8 @@ public class CustomerServiceImpl implements CustomerService
 		}
 		return false;
 		
-		
+
 	}
-	
 	
 	private static int messageBodyforOTP(String recipient, String firstname, String lastname) {
 		System.out.println("Preparing to send message!..");
@@ -148,6 +149,7 @@ public class CustomerServiceImpl implements CustomerService
 		}
 	}
 
+
 	@Override
 	public Customer getUser(String username) 
 	{
@@ -177,27 +179,7 @@ public class CustomerServiceImpl implements CustomerService
 		// TODO Auto-generated method stub
 		return customerRepository.findById(username).get();
 	}
-	public int update(Customer u) {
-		System.out.println("in update");
-		Optional<Customer>op=customerRepository.findById(u.getUsername());
-		
-		if(op.isPresent()) {
-			Customer u1=op.get();
-			
-
-			u1.setFirstname(u.getFirstname());
-			u1.setLastname(u.getLastname());
-			u1.setGender(u.getGender());
-			u1.setAge(u.getAge());
-			u1.setEmail(u.getEmail());
-			u1.setContactno(u.getContactno());
-			
-			customerRepository.save(u1);
-			return 1;
-		}
-		return 0;
-	}
-
+	
 	@Override
 	public void addAddress(String username, Address address) 
 	{
@@ -206,6 +188,12 @@ public class CustomerServiceImpl implements CustomerService
 		customer.setAddress(address);
 		customerRepository.save(customer);
 		
+	}
+
+	@Override
+	public int update(Customer g) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

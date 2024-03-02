@@ -8,7 +8,10 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -78,7 +81,6 @@ public class Customer {
 		this.password = password;
 	}
 
-
 	public String getFirstname() {
 		return firstname;
 	}
@@ -96,8 +98,11 @@ public class Customer {
 
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
-	}
 
+	}	
+	
+	
+	
 
 	public String getGender() {
 		return gender;
@@ -133,7 +138,6 @@ public class Customer {
 		return contactno;
 	}
 
-
 	public void setContactno(long contactno) {
 		this.contactno = contactno;
 	}
@@ -166,4 +170,7 @@ public class Customer {
 				+ ", address=" + address + ", cproducts=" + cproducts + "]";
 	}
 	
-}
+
+	}
+	
+	

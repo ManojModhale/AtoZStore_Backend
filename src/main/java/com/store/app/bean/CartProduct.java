@@ -49,11 +49,6 @@ public class CartProduct {
 	    private Customer customer;
 	    
 	
-	    
-		public CartProduct() {
-			super();
-			// TODO Auto-generated constructor stub
-		}
 	
 		
 		
@@ -83,12 +78,7 @@ public class CartProduct {
 		public void setCustomer(Customer customer) {
 			this.customer = customer;
 		}
-		public int getCartproductId() {
-			return cartproductId;
-		}
-		public void setCartproductId(int cartproductId) {
-			this.cartproductId = cartproductId;
-		}
+		
 		
 		public int getQuantity() {
 			return quantity;
@@ -97,6 +87,33 @@ public class CartProduct {
 			
 			this.quantity = quantity;
 			
+		}
+		
+	    
+	    
+		public CartProduct() {
+			super();
+			// TODO Auto-generated constructor stub
+		}
+		public CartProduct(int cartproductId, int productid, String productname, String category, double price,
+				String description, CartImageFile cartimageFile, String offer, String size, String color) {
+			super();
+			this.cartproductId = cartproductId;
+			this.productid = productid;
+			this.productname = productname;
+			this.category = category;
+			this.price = price;
+			this.description = description;
+			this.cartimageFile = cartimageFile;
+			this.offer = offer;
+			this.size = size;
+			this.color = color;
+		}
+		public int getCartproductId() {
+			return cartproductId;
+		}
+		public void setCartproductId(int cartproductId) {
+			this.cartproductId = cartproductId;
 		}
 		public int getProductid() {
 			return productid;
@@ -113,8 +130,6 @@ public class CartProduct {
 		public String getCategory() {
 			return category;
 		}
-		
-
 		public void setCategory(String category) {
 			this.category = category;
 		}
@@ -154,8 +169,6 @@ public class CartProduct {
 		public void setColor(String color) {
 			this.color = color;
 		}
-		
-	
 		@Override
 		public String toString() {
 			return "CartProduct [cartproductId=" + cartproductId + ", productid=" + productid + ", productname="
