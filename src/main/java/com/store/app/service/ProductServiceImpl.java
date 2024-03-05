@@ -31,10 +31,16 @@ public class ProductServiceImpl implements ProductService
 	@Autowired
 	private VendorRepository vendorRepository;
 
+
+	//private final String uploadDirectory = "F:\\AtoZStore\\AtoZ_Backend\\AtoZ_Store\\src\\main\\resources";
+
 	//private final String uploadDirectory = "D:\\AtoZ_Store\\AtoZ_Store_backend123\\AtoZStore_Backend\\src\\main\\resources";
 	
-	//private final String uploadDirectory = "D:\\AtoZ_Store\\AtoZ_Store_frontend\\AtoZStore_Frontend\\src\\assets";
 	private final String uploadDirectory ="D:\\AtoZ_Store\\AtoZFrontend\\AtoZStore_Frontend\\src\\assets";
+
+
+
+
 	@Override
 	public ResponseEntity<Products> saveNewProduct(Products product, MultipartFile file,String vendorid) throws IOException 
 	{
@@ -57,12 +63,15 @@ public class ProductServiceImpl implements ProductService
 					.build());
 
 		Vendor vendor=vendorRepository.findById(vendorid).get();
+		System.out.println(vendor);
 		if(vendor!=null) {
-			List<Products> vendorProducts=vendor.getProducts();
-			vendorProducts.add(product);
-			vendor.setProducts(vendorProducts);
-			Vendor vend = saveProduct(vendor);
-
+//			List<Products> vendorProducts=vendor.getProducts();
+//			vendorProducts.add(product);
+//			vendor.setProducts(vendorProducts);
+//			Vendor vend = saveProduct(vendor);
+			product.setVendor(vendor);
+			Products savedproduct=saveProduct(product);
+			
 		}
 		if (product != null) {
 			return ResponseEntity.ok(product);
@@ -73,10 +82,10 @@ public class ProductServiceImpl implements ProductService
 	}
 
 	@Override
-	public Vendor saveProduct(Vendor vendor) 
+	public Products saveProduct(Products product) 
 	{
 		// TODO Auto-generated method stub
-		return vendorRepository.save(vendor);
+		return productsRepository1.save(product);
 	}
 
 	@Override

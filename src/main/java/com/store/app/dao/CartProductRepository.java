@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.store.app.bean.CartProduct;
 import com.store.app.bean.Customer;
-import com.store.app.bean.User;
+
 
 import jakarta.transaction.Transactional;
 @Repository
@@ -21,4 +21,11 @@ List<CartProduct> findByCustomer(Customer customer);
 @Modifying
 @Transactional
 void deleteByCustomerUsernameAndCartproductId(String username, int cartproductId);
+
+
+void deleteAllByCartproductIdIn(List<Integer> cartproductIds);
+
+
+
 }
+

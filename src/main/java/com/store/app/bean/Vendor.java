@@ -2,6 +2,8 @@ package com.store.app.bean;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -35,9 +37,9 @@ public class Vendor {
   private String companytype;
   @Embedded
 	private Address address;
-	@OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="vendorid")
-    @OrderColumn(name="no")
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "vendor")
+    @JsonManagedReference
+  
     private List<Products> products;
 public Vendor() {
 	super();

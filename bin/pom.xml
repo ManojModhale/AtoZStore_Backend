@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-=======
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
->>>>>>> cf3bd3dd23743d6ba538f6a43e692d298f7dbbc1
+
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.1.8</version>
-<<<<<<< HEAD
+
 		<relativePath/> <!-- lookup parent from repository -->
-=======
-		<relativePath /> <!-- lookup parent from repository -->
->>>>>>> cf3bd3dd23743d6ba538f6a43e692d298f7dbbc1
+
+
 	</parent>
 	<groupId>com.store</groupId>
 	<artifactId>AtoZ_Store</artifactId>
+	
+	
+	
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>AtoZ_Store</name>
@@ -56,8 +55,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-<<<<<<< HEAD
-=======
+
 		<!-- https://mvnrepository.com/artifact/com.sun.mail/javax.mail -->
 		<dependency>
 			<groupId>com.sun.mail</groupId>
@@ -69,7 +67,7 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.13.0</version> <!-- Use the latest version available -->
 		</dependency>
->>>>>>> cf3bd3dd23743d6ba538f6a43e692d298f7dbbc1
+
 	</dependencies>
 
 	<build>

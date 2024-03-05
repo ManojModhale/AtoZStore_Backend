@@ -8,13 +8,29 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+
 import jakarta.persistence.Id;
+
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Table;
 @Entity
+
+
+
+
+
+
 @Table(name="customers")
 public class Customer {
+
 	@Id
 	private String username;
 	private String password;
@@ -31,10 +47,14 @@ public class Customer {
 	@Embedded
 	private Address address;
 	
-	@OneToMany(mappedBy = "customer")
+
+	
+
+	@OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
 	  @JsonManagedReference
     
     private List<CartProduct> cproducts;
+
 
 	
 	public Customer() {
@@ -55,9 +75,15 @@ public class Customer {
 		this.email = email;
 		this.contactno = contactno;
 		this.address = address;
+
 		this.cproducts = cproducts;
 	}
 
+
+	
+	
+
+	
 
 	public String getUsername() {
 		return username;
@@ -96,7 +122,15 @@ public class Customer {
 
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
+
 	}
+
+
+
+
+	
+	
+	
 
 
 	public String getGender() {
@@ -132,8 +166,6 @@ public class Customer {
 	public long getContactno() {
 		return contactno;
 	}
-
-
 	public void setContactno(long contactno) {
 		this.contactno = contactno;
 	}
@@ -166,4 +198,10 @@ public class Customer {
 				+ ", address=" + address + ", cproducts=" + cproducts + "]";
 	}
 	
+
 }
+
+
+		
+	
+

@@ -72,6 +72,7 @@ public class ProductController
 			products.setSizes(sizes);
 			System.out.println();
 			System.out.println(products);
+			;
 
 			return productService1.saveNewProduct(products, file,vendorid);
 		} catch (IOException e) {

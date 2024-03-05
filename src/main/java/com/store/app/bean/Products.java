@@ -2,6 +2,7 @@ package com.store.app.bean;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -11,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
@@ -33,6 +35,7 @@ public class Products {
     private ImageFile imageFile;
     
     private int quantity;
+    
 
     @ElementCollection
     @CollectionTable(name = "product_colors",joinColumns = @JoinColumn(referencedColumnName = "productid"))
@@ -43,6 +46,13 @@ public class Products {
     @CollectionTable(name = "product_sizes", joinColumns = @JoinColumn(referencedColumnName = "productid"))
     @Column(name = "size") // Added this annotation to specify the column name
     private List<String> sizes;
+    
+    @ManyToOne
+    @JoinColumn(name="vendorid")
+    @JsonBackReference
+    private Vendor vendor;
+    
+   
 
     public Products() {
         super();
@@ -73,6 +83,16 @@ public class Products {
 		this.description = description;
 		this.offer = offer;
 		this.quantity = quantity;
+	}
+    
+	
+
+	public Vendor getVendor() {
+		return vendor;
+	}
+
+	public void setVendor(Vendor vendor) {
+		this.vendor = vendor;
 	}
 
 	public int getProductid() {

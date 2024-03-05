@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.store.app.bean.Products;
+import com.store.app.bean.Vendor;
 
 @Repository
 public interface ProductsRepository extends JpaRepository<Products, Integer> 
@@ -32,6 +33,8 @@ public interface ProductsRepository extends JpaRepository<Products, Integer>
 	List<Products> getOfferedProducts();
 
     List<Products> findByProductnameContaining(String searchprod);
+
+	List<Products> findByVendor(Vendor vendor);
 	
 	/*
     @Query("SELECT p FROM Products p LEFT JOIN FETCH p.imageFile WHERE p.productId = :productId")

@@ -4,6 +4,7 @@ import java.util.List;
 
 
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,29 +17,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.store.app.bean.Customer;
-import com.store.app.bean.User;
 
-import com.store.app.service.UserServiceImpl;
+
+
+
 import com.store.app.service.CustomerService;
-import com.store.app.service.UserService;
+
+
+import com.store.app.service.CustomerService;
+
+
 
 @RestController
 @RequestMapping("/user")
 @CrossOrigin( "http://localhost:4200")
-public class UserController 
+public class CustomerController 
 {
 	
-	@Autowired
-	private UserService userService1;
+
 	@Autowired
 	private CustomerService customerService;
 	
-	@PostMapping("/newuser")
-	public void registerUser(@RequestBody Customer customer)
-	{
-		System.out.println("inside registration "+customer);
-		customerService.registerUser(customer);
-	}
+
 	
 	@PostMapping("/loginuser")
 
@@ -47,7 +47,18 @@ public class UserController
 //		System.out.println("inside login "+user.getUsername()+","+user.getPassword());
 
 		return customerService.loginUser(customer.getUsername(), customer.getPassword());
+
 	}
+	
+	
+	@PostMapping("/newuser")
+	public void registerUser(@RequestBody Customer user)
+	{
+		System.out.println("inside registration "+user);
+		customerService.registerUser(user);
+	}
+	
+	
 	
 	@PostMapping("/forgotpass")
 	public int forgotpassword(@RequestParam String username, @RequestParam String email)
@@ -61,18 +72,29 @@ public class UserController
 		return customerService.changePassword(username, password);
 	}
 	
-	
-	@PostMapping("/update")
-	  public int update(@RequestBody Customer customer) {
-			return customerService.update(customer);
-		}
-	
+
 	@GetMapping("/getuser/{username}")
-	public Customer getUser(@PathVariable String username) {
-		return customerService.getUserByUsername(username);
-	}		
+	public Customer getUserDetails(@PathVariable("username") String username)
+	{
+		return customerService.getUser(username);
+	}
+	
+	@PostMapping("/updateuser")
+	public void updateUserDetails(@RequestBody Customer user)
+	{
+		customerService.updateUser(user);
+	}
+	
+
+	
 		
 		
 		
+		
+
+	
+	
+
+
 	
 }
