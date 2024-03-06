@@ -2,7 +2,9 @@ package com.store.app.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,8 +58,9 @@ public class OrderController {
 		return	orderDetailsService.createTransaction(amount);
 	}
 	
+	/*
 	@PostMapping("/generateOrder/{username}/{amount}")
-	public ResponseEntity<String> generateOrder(@PathVariable(name = "username") String username, 
+	public String generateOrder(@PathVariable(name = "username") String username, 
 			@PathVariable(name="amount")  double amount,
 			@RequestParam String razorpay_order_id , @RequestParam String razorpay_payment_id ,
 			@RequestParam String razorpay_signature, @RequestParam String date, @RequestParam String time
@@ -73,7 +76,7 @@ public class OrderController {
 		System.out.println("amount : "+amount);
 		
 		System.out.println(razorpay_order_id +" [] "+razorpay_payment_id+" [] "+razorpay_signature);
-		/*
+		
 		OrderDetails orderDetails=new OrderDetails();
 		orderDetails.setOrderid(razorpay_order_id);
 		orderDetails.setAvailability(true);
@@ -94,7 +97,7 @@ public class OrderController {
 		orderDetails.setAddress(orderUser.getAddress());
 		
 		orderDetails.setProductsList(orderUser.getCproducts());
-		*/
+		
 		OrderDetails orderDetails=new OrderDetails(razorpay_order_id, true, razorpay_payment_id, razorpay_signature, amount,
 				orderUser.getUsername(), orderUser.getFirstname(), orderUser.getLastname(), orderUser.getGender(), orderUser.getEmail(), orderUser.getContactno(),
 				date, time ,orderUser.getAddress(),null);
@@ -116,8 +119,8 @@ public class OrderController {
 		cartService.makeCartEmpty(cartIds);
 		
 		String successMessage = "Order has been placed successfully!";
-	    return ResponseEntity.status(HttpStatus.OK).body(successMessage);
-	}
+	    return successMessage;
+	}*/
 	
 	@GetMapping("/getOrderById/{orderid}")
     public List<CartProduct> getProductsListByOrderid(@PathVariable("orderid") String orderid) {
@@ -141,7 +144,47 @@ public class OrderController {
 	
 	 @GetMapping("/getOrdersByUsername/{username}")
 	    public List<OrderDetails> getOrdersByUsername(@PathVariable("username") String username) {
+		 System.out.println("$$$$$$$ In orders by username");
 	        return orderDetailsService.getOrdersByUsername(username);
 	    }
 
+
+	    @PostMapping("/generateOrder/{username}/{amount}")
+	    public ResponseEntity<String> generateOrder(@PathVariable(name = "username") String username,
+	                                                 @PathVariable(name = "amount") double amount,
+	                                                 @RequestParam String razorpay_order_id,
+	                                                 @RequestParam String razorpay_payment_id,
+	                                                 @RequestParam String razorpay_signature,
+	                                                 @RequestParam String date,
+	                                                 @RequestParam String time) 
+	    {
+
+	        Customer orderUser = customerRepository.findByUsername(username);
+	        if (orderUser == null) {
+	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+	        }
+
+	        OrderDetails orderDetails = new OrderDetails(razorpay_order_id, true, razorpay_payment_id, razorpay_signature, amount,
+	                orderUser.getUsername(), orderUser.getFirstname(), orderUser.getLastname(), orderUser.getGender(), orderUser.getEmail(), orderUser.getContactno(),
+	                date, time, orderUser.getAddress(), null);
+
+	        try {
+	            orderDetailsService.createOrder(orderDetails, orderUser.getCproducts());
+	        } catch (Exception e) {
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create order");
+	        }
+
+	        try {
+	            cartService.makeCartEmpty(orderUser.getCproducts().stream().map(CartProduct::getCartproductId).collect(Collectors.toList()));
+	        } catch (Exception e) {
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to empty cart");
+	        }
+
+	     // Create a JSON object with the success message
+	        JSONObject responseJson = new JSONObject();
+	        responseJson.put("message", "Order has been placed successfully!");
+
+	        // Return the JSON object with a 200 OK status
+	        return ResponseEntity.ok(responseJson.toString());
+	    }
 }

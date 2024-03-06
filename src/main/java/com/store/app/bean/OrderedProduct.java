@@ -27,6 +27,7 @@ public class OrderedProduct
 	
     @ManyToOne
     @JoinColumn(name = "orderid")
+    @JsonBackReference
     private OrderDetails orderDetails;
 
 	public OrderedProduct() {

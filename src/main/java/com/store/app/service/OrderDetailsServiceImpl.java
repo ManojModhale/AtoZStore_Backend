@@ -74,7 +74,7 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
 	        OrderedProduct orderedProduct = new OrderedProduct(cartProduct.getCartproductId(),
 	                cartProduct.getProductid(), cartProduct.getProductname(), cartProduct.getCategory(),
 	                cartProduct.getPrice(), cartProduct.getOffer(), cartProduct.getSize(), cartProduct.getColor(),
-	                cartProduct.getQuantity(), savedOrderDetails); // Set the saved OrderDetails entity
+	                cartProduct.getQuantity(), savedOrderDetails); 
 	        products.add(orderedProduct);
 	    }
 
