@@ -3,7 +3,8 @@ package com.store.app.bean;
 public class Admin 
 {
 	private String username;
-	private String password;
+	private String password;	
+	private String role="Admin";
 	public Admin() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -25,8 +26,14 @@ public class Admin
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
 	@Override
 	public String toString() {
-		return "Admin [username=" + username + ", password=" + password + "]";
+		return "Admin [username=" + username + ", password=" + password + ", role=" + role + "]";
 	}
 }

@@ -1,12 +1,16 @@
 package com.store.app.controller;
 
+
+
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+//import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,6 +28,7 @@ import com.store.app.bean.Customer;
 import com.store.app.bean.OrderDetails;
 import com.store.app.bean.OrderedProduct;
 import com.store.app.bean.TransactionDetails;
+import com.store.app.dao.CartProductRepository;
 import com.store.app.dao.CustomerRepository;
 import com.store.app.service.CartService;
 import com.store.app.service.CustomerService;
@@ -60,7 +65,11 @@ public class OrderController {
 	
 	/*
 	@PostMapping("/generateOrder/{username}/{amount}")
+
 	public String generateOrder(@PathVariable(name = "username") String username, 
+
+	public boolean generateOrder(@PathVariable(name = "username") String username, 
+
 			@PathVariable(name="amount")  double amount,
 			@RequestParam String razorpay_order_id , @RequestParam String razorpay_payment_id ,
 			@RequestParam String razorpay_signature, @RequestParam String date, @RequestParam String time
@@ -116,11 +125,19 @@ public class OrderController {
 		}
 		System.out.println(cartIds);
 		
+//		cartService.deleteFromCart(username, cartIds.get(0));
 		cartService.makeCartEmpty(cartIds);
 		
 		String successMessage = "Order has been placed successfully!";
+
 	    return successMessage;
-	}*/
+	
+
+		System.out.println(successMessage);
+		return true;
+//	    return ResponseEntity.status(HttpStatus.OK).body(successMessage);
+	}}*/
+
 	
 	@GetMapping("/getOrderById/{orderid}")
     public List<CartProduct> getProductsListByOrderid(@PathVariable("orderid") String orderid) {
@@ -144,7 +161,9 @@ public class OrderController {
 	
 	 @GetMapping("/getOrdersByUsername/{username}")
 	    public List<OrderDetails> getOrdersByUsername(@PathVariable("username") String username) {
+
 		 System.out.println("$$$$$$$ In orders by username");
+
 	        return orderDetailsService.getOrdersByUsername(username);
 	    }
 
@@ -173,12 +192,31 @@ public class OrderController {
 	        } catch (Exception e) {
 	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create order");
 	        }
-
+	        /*
 	        try {
+	        	
+	        	List<Integer> cartIds=new ArrayList<>();
+	    		
+	    		for (CartProduct cartid : orderUser.getCproducts()) {
+	    			cartIds.add(cartid.getCartproductId());
+	    		}
+	        	cartService.makeCartEmpty(cartIds);
 	            cartService.makeCartEmpty(orderUser.getCproducts().stream().map(CartProduct::getCartproductId).collect(Collectors.toList()));
 	        } catch (Exception e) {
 	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to empty cart");
-	        }
+	        }*/
+	        /*
+	        try {
+	        	List<Integer> cartIds=new ArrayList<>();
+	    		
+	    		for (CartProduct cartid : orderUser.getCproducts()) {
+	    			cartIds.add(cartid.getCartproductId());
+	    		}
+	            cartService.makeCartEmpty(cartIds);
+	            System.out.println("Cart products deleted successfully");
+	        } catch (Exception e) {
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to empty cart");
+	        }*/
 
 	     // Create a JSON object with the success message
 	        JSONObject responseJson = new JSONObject();

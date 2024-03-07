@@ -1,8 +1,6 @@
 package com.store.app.service;
 
-
 import java.util.List;
-
 import java.util.Optional;
 import java.util.Properties;
 import java.util.Random;
@@ -19,46 +17,63 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import com.store.app.bean.Customer;
-import com.store.app.bean.Address;
-
-import com.store.app.dao.CustomerRepository;
-
-
-
-
-
-
+import com.store.app.bean.DeliveryPartner;
+import com.store.app.bean.Vendor;
+import com.store.app.dao.DeliveryPartnerRepo;
 @Service
-public class CustomerServiceImpl implements CustomerService 
-{     
-	
-	
-	@Autowired
-	private CustomerRepository customerRepository;
-
+public class DeliveryPartnerServiceImpl implements DeliveryPartnerService{
+    @Autowired
+    DeliveryPartnerRepo deliveryPartnerRepo;
 	@Override
-	public Customer loginUser(String username, String password) 
-	{
-		// TODO Auto-generated method stub
-		return customerRepository.findByUsernameAndPassword(username, password);
+	public void registerDeliveryPartner(DeliveryPartner deliveryPartner) {
+		
+		deliveryPartnerRepo.save(deliveryPartner);
 	}
-
 	@Override
-	public void registerUser(Customer customer) 
-	{
+	public DeliveryPartner Login(String username, String password) {
 		// TODO Auto-generated method stub
-		customerRepository.save(customer);
+		DeliveryPartner deliveryPartner= deliveryPartnerRepo.findByUsernameAndPassword(username,password);
+		if(deliveryPartner != null && "Accept".equals(deliveryPartner.getStatus())) {
+	        return deliveryPartner;
+	    }
+		return null;
 	}
-
 	@Override
-	public int getByEmail(String username, String email) 
-	{
-
-		Customer forgotpassUser=customerRepository.findByUsernameAndEmail(username, email);
-
+	public DeliveryPartner getUserByUsername(String username) {
+		// TODO Auto-generated method stub
+		return deliveryPartnerRepo.findById(username).get();
+	}
+	@Override
+	public int update(DeliveryPartner deliveryPartner) {
+		// TODO Auto-generated method stub
+Optional<DeliveryPartner>op=deliveryPartnerRepo.findById(deliveryPartner.getUsername());
+		
+		if(op.isPresent()) {
+			DeliveryPartner u1=op.get();
+			
+			u1.setFirstname(deliveryPartner.getFirstname());
+			u1.setLastname(deliveryPartner.getLastname());
+			u1.setGender(deliveryPartner.getGender());
+			u1.setAge(deliveryPartner.getAge());
+			u1.setEmail(deliveryPartner.getEmail());
+			u1.setContactno(deliveryPartner.getContactno());
+			u1.setShippingAddress(deliveryPartner.getShippingAddress());
+			u1.setVehicleRegNumber(deliveryPartner.getVehicleRegNumber());
+			u1.setVehicleType(deliveryPartner.getVehicleType());
+			
+			deliveryPartnerRepo.save(u1);
+			return 1;
+		}
+		return 0;
 	
+	}
+	@Override
+	public int getByEmail(String username, String email) {
+		// TODO Auto-generated method stub
+		DeliveryPartner forgotpassUser=deliveryPartnerRepo.findByUsernameAndEmail(username, email);
+
+		
 		if(forgotpassUser!=null)
 		{   
 			return messageBodyforOTP(forgotpassUser.getEmail(), forgotpassUser.getFirstname(),forgotpassUser.getLastname());
@@ -66,15 +81,13 @@ public class CustomerServiceImpl implements CustomerService
 		else
 		{
 			return 0;
-		}		
+		}	
 	}
-	
-	@Override
 	public boolean changePassword(String username, String password) 
 	{
 		// TODO Auto-generated method stub
 
-		Customer changePassUser=customerRepository.findByUsername(username);
+		DeliveryPartner changePassUser=deliveryPartnerRepo.findByUsername(username);
 		System.out.println(changePassUser.toString());
 	
 
@@ -82,7 +95,7 @@ public class CustomerServiceImpl implements CustomerService
 		if(changePassUser!=null)
 		{   
 			changePassUser.setPassword(password);
-			customerRepository.save(changePassUser);
+			deliveryPartnerRepo.save(changePassUser);
 
 			return true;
 		}
@@ -90,13 +103,6 @@ public class CustomerServiceImpl implements CustomerService
 		
 
 	}
-	
-	
-
-
-	
-	
-
 	private static int messageBodyforOTP(String recipient, String firstname, String lastname) {
 		System.out.println("Preparing to send message!..");
 
@@ -173,56 +179,24 @@ public class CustomerServiceImpl implements CustomerService
 		}
 
 	}
-
-
 	@Override
-	public Customer getUser(String username) 
-	{
+	public List<DeliveryPartner> getAllDeliveryPartners() {
 		// TODO Auto-generated method stub
-		return customerRepository.findByUsername(username);
+		return deliveryPartnerRepo.findAll();
 	}
-
 	@Override
-	public void updateUser(Customer user) 
-	{
-		System.out.println("before update:"+user);
+	public boolean changeStatus(String username, String status) {
 		// TODO Auto-generated method stub
-		Customer updatedUser=customerRepository.findByUsername(user.getUsername());
-		
-		updatedUser.setFirstname(user.getFirstname());
-		updatedUser.setLastname(user.getLastname());
-		updatedUser.setEmail(user.getEmail());
-		updatedUser.setContactno(user.getContactno());
-		updatedUser.setGender(user.getGender());
-		updatedUser.setAge(user.getAge());
-		
-		customerRepository.save(updatedUser);
-		
+		DeliveryPartner deliveryPartner=deliveryPartnerRepo.findByUsername(username);
+		if(deliveryPartner!=null)
+		{
+			deliveryPartner.setStatus(status);
+			deliveryPartnerRepo.save(deliveryPartner);
+			return true;
+		}
+		return false;
 	}
 	
-	public Customer getUserByUsername(String username) {
-		// TODO Auto-generated method stub
-		return customerRepository.findById(username).get();
-	}
-	
-	@Override
-	public void addAddress(String username, Address address) 
-	{
-		// TODO Auto-generated method stub
-		Customer customer=customerRepository.findByUsername(username);
-		customer.setAddress(address);
-		customerRepository.save(customer);
-		
-	}
-
-	@Override
-	public List<Customer> getAllCustomers() 
-	{
-		// TODO Auto-generated method stub
-		return customerRepository.findAll();
-	}
-
 	
 
 }
-

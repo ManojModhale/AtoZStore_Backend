@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.razorpay.Order;
 import com.razorpay.RazorpayClient;
-import com.store.app.bean.Address;
 import com.store.app.bean.CartProduct;
 import com.store.app.bean.OrderDetails;
 import com.store.app.bean.OrderedProduct;
@@ -29,11 +28,11 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
 	@Autowired
 	private OrderedProductRepository orderedProductRepository;
 
-	private static final String KEY = "rzp_test_dLv8Y6GGn4fWAF";
-	private static final String KEY_SECRET = "qUItcluFbyPfCKhEWHdrXivL";
+//	private static final String KEY = "rzp_test_dLv8Y6GGn4fWAF";
+//	private static final String KEY_SECRET = "qUItcluFbyPfCKhEWHdrXivL";
 
-	// private static final String KEY="rzp_test_CDzWUi7rZJ1Rwe";
-	// private static final String KEY_SECRET="GP2d32FIU1r1r3TLhkmOdvDZ";
+	 private static final String KEY="rzp_test_dLv8Y6GGn4fWAF";
+	 private static final String KEY_SECRET="qUItcluFbyPfCKhEWHdrXivL";
 	private static final String currency = "INR";
 
 	@Override
@@ -106,6 +105,8 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
 	public List<OrderDetails> getOrdersByUsername(String username) 
 	{
 		// TODO Auto-generated method stub
+		System.out.println("in get order 2");
+	
 		return orderDetailsRepository.findByUsername(username);
 	}
 

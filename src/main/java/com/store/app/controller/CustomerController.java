@@ -4,6 +4,7 @@ import java.util.List;
 
 
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,7 +17,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.store.app.bean.Customer;
+
+
+
+
 import com.store.app.service.CustomerService;
+
+
+import com.store.app.service.CustomerService;
+
 
 
 @RestController
@@ -25,8 +34,21 @@ import com.store.app.service.CustomerService;
 public class CustomerController 
 {
 	
+
 	@Autowired
 	private CustomerService customerService;
+	
+
+	
+	@PostMapping("/loginuser")
+
+	public Customer loginAuthenticate(@RequestBody Customer customer)
+	{
+//		System.out.println("inside login "+user.getUsername()+","+user.getPassword());
+
+		return customerService.loginUser(customer.getUsername(), customer.getPassword());
+
+	}
 	
 	
 	@PostMapping("/newuser")
@@ -36,14 +58,7 @@ public class CustomerController
 		customerService.registerUser(user);
 	}
 	
-	@PostMapping("/loginuser")
-	//public User loginAuthenticate(@RequestParam String username,@RequestParam String password)
-	public Customer loginAuthenticate(@RequestBody Customer user)
-	{
-		System.out.println("inside login "+user.getUsername()+","+user.getPassword());
-
-		return customerService.loginUser(user.getUsername(), user.getPassword());
-	}
+	
 	
 	@PostMapping("/forgotpass")
 	public int forgotpassword(@RequestParam String username, @RequestParam String email)
@@ -61,6 +76,7 @@ public class CustomerController
 	@GetMapping("/getuser/{username}")
 	public Customer getUserDetails(@PathVariable("username") String username)
 	{
+		System.out.println(username);
 		return customerService.getUser(username);
 	}
 	
@@ -70,18 +86,18 @@ public class CustomerController
 		customerService.updateUser(user);
 	}
 	
-	@PostMapping("/update")
-	public int update(@RequestBody Customer g) 
+	@GetMapping("/getAllCustomers")
+	public List<Customer> getAllCustomers()
 	{
-		return customerService.update(g);
+		return customerService.getAllCustomers();
 	}
-	/*
-	@GetMapping("/getuser/{username}")
-	public Customer getUser(@PathVariable String username) 
-	{
-		return customerService.getUserByUsername(username);
+		
+		
+		
+		
 
-	}*/
+	
+	
 
 
 	

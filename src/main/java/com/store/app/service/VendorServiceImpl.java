@@ -1,8 +1,6 @@
 package com.store.app.service;
 
-
 import java.util.List;
-
 import java.util.Optional;
 import java.util.Properties;
 import java.util.Random;
@@ -19,46 +17,67 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import com.store.app.bean.Customer;
-import com.store.app.bean.Address;
-
-import com.store.app.dao.CustomerRepository;
-
-
-
-
-
-
+import com.store.app.bean.DeliveryPartner;
+import com.store.app.bean.Products;
+import com.store.app.bean.Vendor;
+import com.store.app.dao.ProductsRepository;
+import com.store.app.dao.VendorRepository;
 @Service
-public class CustomerServiceImpl implements CustomerService 
-{     
-	
-	
-	@Autowired
-	private CustomerRepository customerRepository;
-
+public class VendorServiceImpl implements VendorService {
+    @Autowired
+    VendorRepository vendorRepository;
+    @Autowired
+    ProductsRepository productsRepository;
 	@Override
-	public Customer loginUser(String username, String password) 
-	{
+	public Vendor vendorLogin(String username, String password) {
 		// TODO Auto-generated method stub
-		return customerRepository.findByUsernameAndPassword(username, password);
+		System.out.println("in service");
+		System.out.println(vendorRepository.findByUsernameAndPassword(username,password));
+		Vendor vendor = vendorRepository.findByUsernameAndPassword(username,password);
+		if(vendor != null && "Accept".equals(vendor.getStatus())) {
+	        return vendor;
+	    }
+		return null;
 	}
-
 	@Override
-	public void registerUser(Customer customer) 
-	{
+	public Vendor addVendor(Vendor vendor) {
+		System.out.println(vendor.toString());
 		// TODO Auto-generated method stub
-		customerRepository.save(customer);
+		return vendorRepository.save(vendor);
 	}
-
 	@Override
-	public int getByEmail(String username, String email) 
-	{
+	public Vendor getUserByUsername(String username) {
+		// TODO Auto-generated method stub
+		return vendorRepository.findByUsername(username);
+	}
+	@Override
+	public int update(Vendor vendor) {
+		// TODO Auto-generated method stub
+		Optional<Vendor>op=vendorRepository.findById(vendor.getUsername());
+		
+		if(op.isPresent()) {
+			Vendor u1=op.get();
+			
+			u1.setFirstname(vendor.getFirstname());
+			u1.setLastname(vendor.getLastname());
+			u1.setGender(vendor.getGender());
+			u1.setAge(vendor.getAge());
+			u1.setEmail(vendor.getEmail());
+			u1.setContactno(vendor.getContactno());
+			u1.setCompanyname(vendor.getCompanyname());
+			u1.setCompanytype(vendor.getCompanytype());
+			u1.setAddress(vendor.getAddress());
+			vendorRepository.save(u1);
+			return 1;
+		}
+		return 0;
+	}
+	public int getByEmail(String username, String email) {
+		// TODO Auto-generated method stub
+		Vendor forgotpassUser=vendorRepository.findByUsernameAndEmail(username, email);
 
-		Customer forgotpassUser=customerRepository.findByUsernameAndEmail(username, email);
-
-	
+		
 		if(forgotpassUser!=null)
 		{   
 			return messageBodyforOTP(forgotpassUser.getEmail(), forgotpassUser.getFirstname(),forgotpassUser.getLastname());
@@ -66,15 +85,13 @@ public class CustomerServiceImpl implements CustomerService
 		else
 		{
 			return 0;
-		}		
+		}	
 	}
-	
-	@Override
 	public boolean changePassword(String username, String password) 
 	{
 		// TODO Auto-generated method stub
 
-		Customer changePassUser=customerRepository.findByUsername(username);
+		Vendor changePassUser=vendorRepository.findByUsername(username);
 		System.out.println(changePassUser.toString());
 	
 
@@ -82,7 +99,7 @@ public class CustomerServiceImpl implements CustomerService
 		if(changePassUser!=null)
 		{   
 			changePassUser.setPassword(password);
-			customerRepository.save(changePassUser);
+			vendorRepository.save(changePassUser);
 
 			return true;
 		}
@@ -90,13 +107,6 @@ public class CustomerServiceImpl implements CustomerService
 		
 
 	}
-	
-	
-
-
-	
-	
-
 	private static int messageBodyforOTP(String recipient, String firstname, String lastname) {
 		System.out.println("Preparing to send message!..");
 
@@ -173,56 +183,31 @@ public class CustomerServiceImpl implements CustomerService
 		}
 
 	}
-
-
 	@Override
-	public Customer getUser(String username) 
-	{
+	public List<Products> getVendorProducts(String username) {
 		// TODO Auto-generated method stub
-		return customerRepository.findByUsername(username);
+		Vendor vendor=vendorRepository.findByUsername(username);
+//		return productsRepository.findByVendor(vendor);
+		return vendor.getProducts();
 	}
-
 	@Override
-	public void updateUser(Customer user) 
-	{
-		System.out.println("before update:"+user);
+	public List<Vendor> getAllVendors() {
 		// TODO Auto-generated method stub
-		Customer updatedUser=customerRepository.findByUsername(user.getUsername());
-		
-		updatedUser.setFirstname(user.getFirstname());
-		updatedUser.setLastname(user.getLastname());
-		updatedUser.setEmail(user.getEmail());
-		updatedUser.setContactno(user.getContactno());
-		updatedUser.setGender(user.getGender());
-		updatedUser.setAge(user.getAge());
-		
-		customerRepository.save(updatedUser);
-		
+		return vendorRepository.findAll();
 	}
-	
-	public Customer getUserByUsername(String username) {
-		// TODO Auto-generated method stub
-		return customerRepository.findById(username).get();
-	}
-	
 	@Override
-	public void addAddress(String username, Address address) 
-	{
+	public boolean changeStatus(String username, String status) {
 		// TODO Auto-generated method stub
-		Customer customer=customerRepository.findByUsername(username);
-		customer.setAddress(address);
-		customerRepository.save(customer);
-		
+		Vendor vendor=vendorRepository.findByUsername(username);
+		System.out.println(vendor);
+		if(vendor!=null)
+		{
+			vendor.setStatus(status);
+			System.out.println(vendor);
+			vendorRepository.save(vendor);
+			return true;
+		}
+		return false;
 	}
-
-	@Override
-	public List<Customer> getAllCustomers() 
-	{
-		// TODO Auto-generated method stub
-		return customerRepository.findAll();
-	}
-
-	
 
 }
-

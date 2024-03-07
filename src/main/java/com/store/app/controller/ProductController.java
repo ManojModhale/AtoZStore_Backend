@@ -45,6 +45,7 @@ public class ProductController
 			@RequestParam("price") double price,
 			@RequestParam("productname") String productname, 
 			@RequestParam("quantity") int quantity,
+			@RequestParam("vendorid") String vendorid,
 			@RequestParam("image") MultipartFile file) throws SQLException 
 	{
 		try {
@@ -71,8 +72,9 @@ public class ProductController
 			products.setSizes(sizes);
 			System.out.println();
 			System.out.println(products);
+			;
 
-			return productService1.saveNewProduct(products, file);
+			return productService1.saveNewProduct(products, file,vendorid);
 		} catch (IOException e) {
 			// Handle JSON parsing errors
 			e.printStackTrace();
@@ -162,6 +164,14 @@ public class ProductController
 	    //     }
 	 
 	    // }
+	    
+	    @GetMapping("/searchproducts/{searchprod}")
+	    public List<Products> searchproducts(@PathVariable String searchprod){
+	    	System.out.println(searchprod);
+	    	return productService1.getSearchProducts(searchprod);
+	    }
+	    
+	    
 	    @PostMapping("/changepath/{productId}")
 	    public void changeImagePath(@RequestParam String filePath,@PathVariable int productId)
 	    {

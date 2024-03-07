@@ -2,6 +2,7 @@ package com.store.app.bean;
 
 import com.store.app.bean.ImageFile.ImageFileBuilder;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

@@ -2,11 +2,13 @@ package com.store.app.bean;
 
 import java.util.List;
 
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -35,7 +37,7 @@ public class OrderDetails
 	@Embedded
 	private Address address;
 	
-	@OneToMany(mappedBy = "orderDetails", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "orderDetails", cascade = CascadeType.ALL,fetch=FetchType.EAGER, orphanRemoval = true)
     @JsonManagedReference
 	private List<OrderedProduct> productsList;
 	

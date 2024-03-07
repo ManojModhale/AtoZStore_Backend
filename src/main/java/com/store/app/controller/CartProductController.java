@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.store.app.bean.CartProduct;
 import com.store.app.bean.Customer;
+
+
 import com.store.app.service.CartService;
 
 @RestController
@@ -40,7 +42,10 @@ public class CartProductController {
 	@PostMapping("/productquantity/{updateaction}/{username}")
 	public boolean updateProQuantity(@PathVariable String updateaction,@PathVariable String username, @RequestBody  CartProduct cartProduct) {
 		System.out.println(username);
-		return cartService.updateProductQuantity(updateaction,username,cartProduct.getProductid());
+
+		return cartService.updateProductQuantity(updateaction,username,cartProduct.getCartproductId());
+		
+
 	}
 	@GetMapping("getcartproducts/{username}")
 	public List<CartProduct> getfromcart(@PathVariable String username) {

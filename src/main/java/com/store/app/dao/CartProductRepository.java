@@ -8,8 +8,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.store.app.bean.CartImageFile;
 import com.store.app.bean.CartProduct;
 import com.store.app.bean.Customer;
+
 
 import jakarta.transaction.Transactional;
 @Repository
@@ -21,8 +23,10 @@ List<CartProduct> findByCustomer(Customer customer);
 @Transactional
 void deleteByCustomerUsernameAndCartproductId(String username, int cartproductId);
 
+
 void deleteAllByCartproductIdIn(List<Integer> cartproductIds);
 
-
+List<CartProduct> findByCartimageFile(CartImageFile cartImageFile);
 
 }
+

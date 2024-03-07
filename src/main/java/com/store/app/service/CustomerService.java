@@ -1,12 +1,12 @@
 package com.store.app.service;
 
-import org.springframework.stereotype.Service;
 
+import java.util.List;
 import com.store.app.bean.Address;
 import com.store.app.bean.Customer;
 
 
-@Service
+
 public interface CustomerService 
 {
 	public Customer loginUser(String username, String password);
@@ -23,9 +23,8 @@ public interface CustomerService
 
 	public Customer getUserByUsername(String username);
 
-	public int update(Customer g);
-
 	public void addAddress(String username, Address address);
 	
+	public List<Customer> getAllCustomers();
 	
 }
